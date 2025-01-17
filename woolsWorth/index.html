@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .creative-container {
+            width: 320px;
+            height: 480px;
+            border: 1px solid #000;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            background-color: #d1dee7;
+            touch-action: none;
+            pointer-events: none;
+        }
+
+        .slider {
+            display: flex;
+            width: 1600px; /* 320px * 5 pages */
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            width: 320px;
+            height: 480px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide img {
+            height: auto;
+            /* max-height: 100%; */
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .logo {
+            position: absolute;
+top: 30px;
+left: 0;
+width: 200px;
+height: auto;
+right: 0;
+margin: auto;
+        }
+
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+</head>
+<body>
+    <div class="creative-container">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+        <div class="slider">
+            <div class="slide"><img src="assets/screen1.jpg" alt="Image 1"></div>
+            <div class="slide"><img src="assets/screen2.jpg" alt="Image 2"></div>
+            <div class="slide"><img src="assets/screen3.jpg" alt="Image 3"></div>
+            <div class="slide"><img src="assets/screen4.jpg" alt="Image 4"></div>
+            <div class="slide"><img src="assets/screen5.jpg" alt="Image 5"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slider.style.transform = `translateX(${-index * 320}px)`;
+        }
+
+        const config = {
+            type: Phaser.AUTO,
+            width: 320,
+            height: 480,
+            parent: 'phaser-container',
+            transparent: true,
+            scene: {
+                preload: preload,
+                create: create
+            }
+        };
+
+        const game = new Phaser.Game(config);
+
+        function preload() {
+            // Preload assets if needed
+        }
+
+        function create() {
+            this.input.on('pointerdown', (pointer) => {
+                startX = pointer.x;
+            });
+
+            this.input.on('pointerup', (pointer) => {
+                const swipeDistance = pointer.x - startX;
+
+                if (swipeDistance > 50 && currentIndex > 0) {
+                    /* currentIndex--; */
+                } else if (swipeDistance < -50 && currentIndex < slides.length - 1) {
+                    currentIndex++;
+                }
+
+                showSlide(currentIndex);
+            });
+        }
+
+        let startX = 0;
+    </script>
+</body>
+</html>
