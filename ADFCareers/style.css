@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas{
+  background-color: #F9F8F8;
+}
+
+@font-face {
+  font-family: 'ImpactRegular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Impact Regular'), url('assets/fonts/impact.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Inter';
+    src: url('assets/fonts/Inter.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    /* Optionally add this to avoid layout shifts:
+       font-display: swap; */
+  }
+
+.dummy {
+  color: #ffffff;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  z-index: -1;
+}
+
+.dummy p {
+  opacity: 1;
+}
+
+.dummy p:nth-child(1) {
+  font-family: "ImpactRegular";
+}
+
+.dummy p:nth-child(2) {
+  font-family: "Inter";
+}
+
+
+/* Camera Flash Effect */
+@keyframes cameraFlash {
+  0% {
+    opacity: 0; /* Start invisible */
+  }
+  25% {
+    opacity: 1; /* Bright flash */
+  }
+  100% {
+    opacity: 0; /* Fade out completely */
+  }
+}
+
+.camera-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white; /* Bright white for the flash */
+  opacity: 0; /* Default state invisible */
+  z-index: 9999; /* Ensure it appears above all other elements */
+  animation: cameraFlash 1s ease-in-out forwards; /* Trigger animation */
+}
