@@ -16,17 +16,17 @@ body {
 
 @font-face {
   font-family: "abrilbold";
-  src: url("./assets/Abril_Display_Bold.otf");
+  src: url("./assets/fonts/EspinosaNova-Bold.otf");
 }
 
 @font-face {
   font-family: "abrilextrabold";
-  src: url("./assets/Abril_Display_ExtraBold.otf");
+  src: url("./assets/fonts/EspinosaNova-CapitularIV.otf");
 }
 
 @font-face {
   font-family: "abrilsemibold";
-  src: url("./assets/Abril_Display_SemiBold.otf");
+  src: url("./assets/fonts/EspinosaNova-Semibold.otf");
 }
 
 .dummy {
