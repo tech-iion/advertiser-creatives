@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #000000;
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@font-face {
+  font-family: "abrilbold";
+  src: url("./assets/fonts/EspinosaNova-Bold.otf");
+}
+
+@font-face {
+  font-family: "abrilextrabold";
+  src: url("./assets/fonts/EspinosaNova-CapitularIV.otf");
+}
+
+@font-face {
+  font-family: "abrilsemibold";
+  src: url("./assets/fonts/EspinosaNova-Semibold.otf");
+}
+
+@font-face {
+  font-family: "abrilregular";
+  src: url("./assets/fonts/EspinosaNova-Regular.otf");
+}
+
+.dummy {
+  color: #ffffff;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  z-index: -1;
+}
+
+.dummy p {
+  opacity: 1;
+}
+
+.dummy p:nth-child(1) {
+  font-family: "abrilbold";
+}
+
+.dummy p:nth-child(2) {
+  font-family: "abrilextrabold";
+}
+
+.dummy p:nth-child(3) {
+  font-family: "abrilsemibold";
+}
+
+.dummy p:nth-child(4) {
+  font-family: "abrilregular";
+}
+
+/* Camera Flash Effect */
+@keyframes cameraFlash {
+  0% {
+    opacity: 0; /* Start invisible */
+  }
+  25% {
+    opacity: 1; /* Bright flash */
+  }
+  100% {
+    opacity: 0; /* Fade out completely */
+  }
+}
+
+.camera-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white; /* Bright white for the flash */
+  opacity: 0; /* Default state invisible */
+  z-index: 9999; /* Ensure it appears above all other elements */
+  animation: cameraFlash 1s ease-in-out forwards; /* Trigger animation */
+}

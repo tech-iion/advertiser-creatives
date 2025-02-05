@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      #app {
+        position: fixed !important;
+        height: 100%;
+        width: auto;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+
+      #openWindowButton {
+        position: fixed !important;
+        height: 100%;
+        width: auto;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+    </style>
+    <title>OBSIDIAN | XBOX</title>
+    <script type="module" crossorigin src="./assets/index-xqrVdDgx.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/phaser-DM0uoNMb.js">
+  </head>
+
+  <body>
+    <button id="openWindowButton">Open Avowed Website</button>
+    <div id="flashContainer"></div>
+
+    <div class="dummy">
+      <p>Hello</p>
+      <p>Hello</p>
+      <p>Hello</p>
+      <p>Hello</p>
+    </div>
+
+    <div id="app">
+      <div id="game-container"></div>
+    </div>
+
+    <script>
+      function openWindow() {
+        const url = "https://www.xbox.com/avowed";
+        const newWindow = window.open(url, "_blank");
+
+        // Check if the window was successfully opened
+        if (
+          !newWindow ||
+          newWindow.closed ||
+          typeof newWindow.closed === "undefined"
+        ) {
+          console.log("Please allow popups for this website to open the link.");
+        }
+      }
+
+      // Example of attaching this to a button click
+      document
+        .getElementById("openWindowButton")
+        .addEventListener("click", openWindow);
+    </script>
+  </body>
+</html>
