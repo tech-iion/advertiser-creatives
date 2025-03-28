@@ -1,51 +1,101 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cooper Eroxon - Memory Match</title>
-    <meta charset="utf-8" />
-    <!-- Allow fullscreen mode on iOS devices. (These are Apple specific meta tags.) -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"
-    />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link rel="apple-touch-icon" sizes="256x256" href="./assets/game_title-DwiAPYFk.png" />
-    <meta name="HandheldFriendly" content="true" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Chrome for Android web app tags -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="shortcut icon" sizes="256x256" href="./assets/game_title-DwiAPYFk.png" />
     <style>
-      body{
-        font-family: "Lato", sans-serif !important;
+      @font-face {
+        font-family: "ProximaNovaBold";
+        src: url("https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/cooperEroxon/assets/img/ProximaNovaBold.otf");
         font-weight: 900 !important;
-        font-style: bold !important;
+      }
+/* src: url("assets/font/Proxima Nova Bold.otf"); */
+      @font-face {
+        font-family: "ProximaNovaSemibold";
+        src: url("https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/cooperEroxon/assets/img/ProximaNovaSemibold.otf");
+        font-weight: 600 !important;
+      }
+
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      html,
+      body {
+        overflow: hidden;
+        touch-action: none;
+        -ms-touch-action: none;
+      }
+
+      body {
+        background-color: #ffffff;
+      }
+
+      canvas {
+        touch-action-delay: none;
+        touch-action: none;
+        -ms-touch-action: none;
+      }
+
+      .default {
+        color: #ffffff;
+        position: absolute;
+        top: 0;
+        opacity: 0;
+        z-index: -1;
+      }
+
+      .default p {
+        opacity: 1;
+      }
+
+      .default p:nth-child(1) {
+        font-family: "ProximaNovaBold" !important;
+      }
+
+      .default p:nth-child(2) {
+        font-family: "ProximaNovaSemibold" !important;
       }
     </style>
-    <script type="module" crossorigin src="./assets/index-B9jjvnnJ.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/phaser-Cs78eZmd.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-yTj9f0Xq.css">
+    <script type="module" crossorigin src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/cooperEroxon/assets/index-Dm4TtBgT.js"></script>
+    <link rel="modulepreload" crossorigin href="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/cooperEroxon/assets/phaser-Cs78eZmd.js">
   </head>
   <body>
-    <div
-      style="
-        font-family: vanilla;
-        position: absolute;
-        left: -1000px;
-        visibility: hidden;
-      "
-    >
-      .
+    <div class="default">
+      <p>Hello</p>
+      <p>Hello</p>
     </div>
-    
+
     <div id="game_content"></div>
-    <canvas id="confetti-canvas" style="touch-action: none;pointer-events: none;position: fixed; top: 0; left: 0;right: 0;bottom: 0;margin: auto; pointer-events: none; z-index: 999;"></canvas>
+    <canvas
+      id="confetti-canvas"
+      style="
+        touch-action: none;
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        pointer-events: none;
+        z-index: 999;
+      "
+    ></canvas>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+      //PLL
+      window.trackingType =
+        "https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_id=%%campaignId%%&publisher_id=%%pubId%%&creative_id=%%creativeId%%&request_id=%%requestId%%&user_id=%%userId%%&ip_address=%%ip%%&app_id_bundle_id=%%bundle%%&maid=%%ifa%%&app_name=%%appName%%&os=%%os%%&user_agent=%%userAgentEnc%%&latitude=%%lat%%&longitude=%%lon%%&page_url=%%pageUrl%%&country=%%country%%&device_make=%%deviceMake%%&domain=%%domain%%&height=%%height%%&width=%%width%%&video_min_duration=%%videoMinDuration%%&video_max_duration=%%videoMaxDuration%%&content_genre=%%contgenre%%&content_cat=%%contcat%%&gdpr=%%gdpr%%&gdpr_consent=%%gdprConsent%%&demand_id=%%demandId%%&line_item=%%adgroupId%%&event_name=";
+      window.setTracker = "%%clickUrl%%";
+      window.pathUrl =
+        "https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/cooperEroxon/";
+      window.landingPageUrl =
+        window.setTracker +
+        "https://ad.doubleclick.net/ddm/trackclk/N2175572.4357798LEVELUPGROUP/B33279617.417109712;dc_trk_aid=609523662;dc_trk_cid=232462593;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};ltd=;dc_tdv=1";
+    </script>
   </body>
 </html>
