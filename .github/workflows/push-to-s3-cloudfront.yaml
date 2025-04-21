@@ -18,7 +18,6 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::623723814582:role/github-action-role
-          role-session-name: AWS_GH_LOGIN_OIDC
           aws-region: 'us-west-2' 
 
       - name: Sync files to S3
