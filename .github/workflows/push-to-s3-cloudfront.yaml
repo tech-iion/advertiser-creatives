@@ -23,8 +23,8 @@ jobs:
       - name: Set up AWS CLI and Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: 'arn:aws:iam::623723814582:role/github-action-role'
-          aws-region: {{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Sync files to S3
         run: |
