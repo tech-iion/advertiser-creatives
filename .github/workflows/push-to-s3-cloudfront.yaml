@@ -1,0 +1,32 @@
+name: Deploy to S3 and CloudFront
+
+on:
+  workflow_dispatch:  
+  push:
+    branches:
+      - main  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI and Assume Role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::623723814582:role/github-action-role
+          role-session-name: AWS_GH_LOGIN_OIDC
+          aws-region: 'us-west-2' 
+
+      - name: Sync files to S3
+        run: |
+          aws s3 sync ./ s3://prod-iion-creative-hub --delete
+
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          DISTRIBUTION_ID="E12QUZ3EJTLKMA" 
+          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"  # Invalidate all files in CloudFront cache
