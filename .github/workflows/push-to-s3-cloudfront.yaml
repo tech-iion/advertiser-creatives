@@ -6,9 +6,20 @@ on:
     branches:
       - main  
 
+permissions:
+  id-token: write  
+  contents: read  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+
+    env:
+      AWS_ROLE_TO_ASSUME: 'arn:aws:iam::623723814582:role/github-action-role'
+      AWS_REGION: 'us-west-2'
+      S3_BUCKET: 'prod-iion-creative-hub'
+      CLOUDFRONT_DISTRIBUTION_ID: 'E12QUZ3EJTLKMA'
 
     steps:
       - name: Checkout Repository
@@ -17,16 +28,15 @@ jobs:
       - name: Set up AWS CLI and Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::623723814582:role/github-action-role
-          role-session-name: AWS_GH_LOGIN_OIDC
-          aws-region: 'us-west-2' 
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Sync files to S3
         run: |
-          aws s3 sync ./ s3://prod-iion-creative-hub --delete
+          aws s3 sync ./ s3://${{ env.S3_BUCKET }} --delete
 
 
       - name: Invalidate CloudFront Cache
         run: |
-          DISTRIBUTION_ID="E12QUZ3EJTLKMA" 
-          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"  # Invalidate all files in CloudFront cache
+          DISTRIBUTION_ID="${{ env.CLOUDFRONT_DISTRIBUTION_ID }}" 
+          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
