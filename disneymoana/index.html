@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script src="https://static.pexi.nl/general/jquery.min.js"></script>
+  <script src="https://static.pexi.nl/pexi.js"></script>
+
+  <link rel="stylesheet" href="left.css">
+</head>
+<body>
+  <!-- Audio elements -->
+  <audio id="background-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="card-rotate-sound">
+    <source src="cardrotate.mp3" type="audio/mpeg">
+  </audio>
+  
+  <div id="container" style="width: 320px; height: 480px; margin: 0 auto; position: relative; overflow: hidden;">
+  <div id="stage" class="hiddenOnload">
+		<div class="strand">
+			<img style="width: 27%;
+			left: 0;
+			right: 0;
+			margin: auto;
+			position: absolute;
+			height: auto;
+			top: 4%;
+		" src="Disney_idE1gjOgPC_1.png" alt="">
+			<div class="puzzel">
+				
+				<div class="row1">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row1L.png" alt="" class="piece L">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row1M.png" alt="" class="piece M">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row1R.png" alt="" class="piece R">
+				</div>
+				<div class="row2">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row2L.png" alt="" class="piece L">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row2M.png" alt="" class="piece M">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row2R.png" alt="" class="piece R">
+				</div>
+				<div class="row3">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row3L.png" alt="" class="piece L">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row3M.png" alt="" class="piece M">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row3R.png" alt="" class="piece R">
+				</div>
+				<div class="row4">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row4L.png" alt="" class="piece L">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row4M.png" alt="" class="piece M">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row4R.png" alt="" class="piece R">
+				</div>
+				<div class="row5">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row5L.png" alt="" class="piece L">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row5M.png" alt="" class="piece M">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row5R.png" alt="" class="piece R">
+				</div>
+				<div class="row6">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row6L.png" alt="" class="piece L">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row6M.png" alt="" class="piece M">
+					<img src="https://tech-iion.github.io/advertiser-creatives/disneymoana/row6R.png" alt="" class="piece R">
+				</div>
+				<img src="hand.png" alt="" class="cursor">
+			</div>
+		</div>
+    </div>
+  </div>
+  </div>
+
+
+  <script src="https://static.pexi.nl/general/gsap_3.9.1_min.js"></script>
+  <script src="https://static.pexi.nl/punktlich/punkScaling.js"></script>
+  <script src="left.js"></script>
+  <script src="https://tech-iion.github.io/advertiser-creatives/disneymoana/scroll.js"></script>
+</body>
+
+</html>
