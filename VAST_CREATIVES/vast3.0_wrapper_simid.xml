@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd" version="3.0">
+  <Ad id="iionSIMIDWrapper">
+    <Wrapper>
+      <AdSystem>iionSIMID</AdSystem>
+      <VASTAdTagURI><![CDATA[https://djlord7.github.io/simid-demo/vast3.0_simid.xml]]></VASTAdTagURI>
+      <Error><![CDATA[https://yourdomain.com/tracking/error]]></Error>
+      <Impression><![CDATA[https://yourdomain.com/tracking/impression]]></Impression>
+      <Creatives>
+        <Creative id="1" sequence="1">
+          <Linear>
+            <TrackingEvents>
+              <Tracking event="start"><![CDATA[https://yourdomain.com/tracking/start]]></Tracking>
+              <Tracking event="firstQuartile"><![CDATA[https://yourdomain.com/tracking/firstQuartile]]></Tracking>
+              <Tracking event="midpoint"><![CDATA[https://yourdomain.com/tracking/midpoint]]></Tracking>
+              <Tracking event="thirdQuartile"><![CDATA[https://yourdomain.com/tracking/thirdQuartile]]></Tracking>
+              <Tracking event="complete"><![CDATA[https://yourdomain.com/tracking/complete]]></Tracking>
+              <Tracking event="mute"><![CDATA[https://yourdomain.com/tracking/mute]]></Tracking>
+              <Tracking event="unmute"><![CDATA[https://yourdomain.com/tracking/unmute]]></Tracking>
+              <Tracking event="pause"><![CDATA[https://yourdomain.com/tracking/pause]]></Tracking>
+              <Tracking event="resume"><![CDATA[https://yourdomain.com/tracking/resume]]></Tracking>
+              <Tracking event="fullscreen"><![CDATA[https://yourdomain.com/tracking/fullscreen]]></Tracking>
+              <Tracking event="creativeView"><![CDATA[https://yourdomain.com/tracking/creativeView]]></Tracking>
+            </TrackingEvents>
+          </Linear>
+        </Creative>
+      </Creatives>
+      <Extensions>
+        <Extension type="geo">
+          <Country>IN</Country>
+          <Bandwidth>4</Bandwidth>
+          <BandwidthKbps>20000</BandwidthKbps>
+        </Extension>
+        <Extension type="metrics">
+          <FeEventId>uniqueEvent123</FeEventId>
+          <AdEventId>iionAdLaunchABC</AdEventId>
+        </Extension>
+      </Extensions>
+    </Wrapper>
+  </Ad>
+</VAST>
