@@ -1,0 +1,49 @@
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0">
+<Ad id="123456">
+<InLine>
+<AdSystem version="1.0">iionSIMID</AdSystem>
+<AdTitle>SIMID Playable Ad</AdTitle>
+<Description>Playable ad using SIMID framework</Description>
+<Impression>
+<![CDATA[ https://yourdomain.com/impression ]]>
+</Impression>
+<Creatives>
+<Creative sequence="1">
+<Linear>
+<Duration>00:00:30</Duration>
+<TrackingEvents>
+<Tracking event="start">
+<![CDATA[ https://yourdomain.com/start ]]>
+</Tracking>
+<Tracking event="firstQuartile">
+<![CDATA[ https://yourdomain.com/firstQuartile ]]>
+</Tracking>
+<Tracking event="midpoint">
+<![CDATA[ https://yourdomain.com/midpoint ]]>
+</Tracking>
+<Tracking event="thirdQuartile">
+<![CDATA[ https://yourdomain.com/thirdQuartile ]]>
+</Tracking>
+<Tracking event="complete">
+<![CDATA[ https://yourdomain.com/complete ]]>
+</Tracking>
+</TrackingEvents>
+<VideoClicks>
+<ClickThrough>
+<![CDATA[ https://yourdomain.com/clickthrough ]]>
+</ClickThrough>
+</VideoClicks>
+<MediaFiles>
+<MediaFile delivery="progressive" type="video/mp4" width="640" height="360" scalable="true" maintainAspectRatio="true">
+<![CDATA[ https://djlord7.github.io/simid-demo/cookingVideo.mp4 ]]>
+</MediaFile>
+<InteractiveCreativeFile type="text/html" apiFramework="SIMID">
+<![CDATA[ https://creative-hub.iion.io/vast/simid_overlay2.html ]]>
+</InteractiveCreativeFile>
+</MediaFiles>
+</Linear>
+</Creative>
+</Creatives>
+</InLine>
+</Ad>
+</VAST>

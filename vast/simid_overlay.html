@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SIMID Try Me Ad</title>
+    <script src="simid_protocol.js"></script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #000;
+      }
+      #try_me_button {
+        z-index: 10;
+        padding: 20px 40px;
+        font-size: 24px;
+        cursor: pointer;
+        position: absolute;
+      }
+      #ad_container {
+  width: 100%;
+  height: 100%;
+      }
+    </style>
+    <script src="../simid_protocol.js"></script>
+    <script src="base_simid.js"></script>
+    <script src="simid_overlay.js"></script>
+  </head>
+  <body>
+    <div id="ad_container"></div>
+
+
+    <script>
+
+      const simidOverlay = new SimidOverlay();
+      simidOverlay.ready();
+    </script>
+    <script>
+      //PLL
+      function fetchAPI(trackingURL) {
+        fetch(trackingURL, { method: "GET" })
+          .then((response) => console.log("Tracking sent:", response.status))
+          .catch((error) => console.error("Tracking error:", error));
+      }
+      window.trackingType =
+        "https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_id=%%campaignId%%&publisher_id=%%pubId%%&creative_id=%%creativeId%%&request_id=%%requestId%%&user_id=%%userId%%&ip_address=%%ip%%&app_id_bundle_id=%%bundle%%&maid=%%ifa%%&app_name=%%appName%%&os=%%os%%&user_agent=%%userAgentEnc%%&latitude=%%lat%%&longitude=%%lon%%&page_url=%%pageUrl%%&country=%%country%%&device_make=%%deviceMake%%&domain=%%domain%%&height=%%height%%&width=%%width%%&video_min_duration=%%videoMinDuration%%&video_max_duration=%%videoMaxDuration%%&content_genre=%%contgenre%%&content_cat=%%contcat%%&gdpr=%%gdpr%%&gdpr_consent=%%gdprConsent%%&demand_id=%%demandId%%&line_item=%%adgroupId%%&event_name=";
+      window.setTracker = "%%clickUrl%%";
+    </script>
+  </body>
+</html>
