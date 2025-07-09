@@ -59,7 +59,7 @@ https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_i
 </VideoClicks>
 <MediaFiles>
 <MediaFile delivery="progressive" type="video/mp4">
-https://djlord7.github.io/simid-demo/cookingVideo.mp4
+https://creative-hub.iion.io/simid/cookingVideo.mp4
 </MediaFile>
 <InteractiveCreativeFile type="text/html" apiFramework="SIMID" variableDuration="true">
 https://creative-hub.iion.io/simid/simid_compiled.html
