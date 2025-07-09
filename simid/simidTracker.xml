@@ -6,7 +6,7 @@
 <Description>SIMID Linear Video Ad</Description>
 <Error>https://www.example.com/error</Error>
 <Impression><![CDATA[
-https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_id=%%campaig[…]nd_id=%%demandId%%&line_item=%%adgroupId%%&event_name=IMPRESSION
+https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_id=%%campaignId%%&publisher_id=%%pubId%%&creative_id=%%creativeId%%&request_id=%%requestId%%&user_id=%%userId%%&ip_address=%%ip%%&app_id_bundle_id=%%bundle%%&maid=%%ifa%%&app_name=%%appName%%&os=%%os%%&user_agent=%%userAgentEnc%%&latitude=%%lat%%&longitude=%%lon%%&page_url=%%pageUrl%%&country=%%country%%&device_make=%%deviceMake%%&domain=%%domain%%&height=%%height%%&width=%%width%%&video_min_duration=%%videoMinDuration%%&video_max_duration=%%videoMaxDuration%%&content_genre=%%contgenre%%&content_cat=%%contcat%%&gdpr=%%gdpr%%&gdpr_consent=%%gdprConsent%%&demand_id=%%demandId%%&line_item=%%adgroupId%%&event_name=IMPRESSION
 ]]></Impression>
 <Creatives>
 <Creative sequence="1">
@@ -14,7 +14,7 @@ https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_i
 <Duration>00:01:55</Duration>
 <TrackingEvents>
 <Tracking event="start"><![CDATA[
-https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_id=%%campaig[…]nd_id=%%demandId%%&line_item=%%adgroupId%%&event_name=START
+https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_id=%%campaignId%%&publisher_id=%%pubId%%&creative_id=%%creativeId%%&request_id=%%requestId%%&user_id=%%userId%%&ip_address=%%ip%%&app_id_bundle_id=%%bundle%%&maid=%%ifa%%&app_name=%%appName%%&os=%%os%%&user_agent=%%userAgentEnc%%&latitude=%%lat%%&longitude=%%lon%%&page_url=%%pageUrl%%&country=%%country%%&device_make=%%deviceMake%%&domain=%%domain%%&height=%%height%%&width=%%width%%&video_min_duration=%%videoMinDuration%%&video_max_duration=%%videoMaxDuration%%&content_genre=%%contgenre%%&content_cat=%%contcat%%&gdpr=%%gdpr%%&gdpr_consent=%%gdprConsent%%&demand_id=%%demandId%%&line_item=%%adgroupId%%&event_name=START
 ]]></Tracking>
 <Tracking event="firstQuartile">https://www.example.com/firstQuartile</Tracking>
 <Tracking event="midpoint">https://www.example.com/midpoint</Tracking>
