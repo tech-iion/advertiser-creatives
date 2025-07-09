@@ -5,17 +5,13 @@
 <AdTitle>Linear SIMID Example</AdTitle>
 <Description>SIMID Linear Video Ad</Description>
 <Error>https://www.example.com/error</Error>
-<Impression><![CDATA[
-https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_id=%%campaig[…]nd_id=%%demandId%%&line_item=%%adgroupId%%&event_name=IMPRESSION
-]]></Impression>
+<Impression>https://www.example.com/impression</Impression>
 <Creatives>
 <Creative sequence="1">
 <Linear>
 <Duration>00:01:55</Duration>
 <TrackingEvents>
-<Tracking event="start"><![CDATA[
-https://staging-dmp-producer.iion.io/tracker/impressions?platform=RTB&campaign_id=%%campaig[…]nd_id=%%demandId%%&line_item=%%adgroupId%%&event_name=START
-]]></Tracking>
+<Tracking event="start">https://www.example.com/start</Tracking>
 <Tracking event="firstQuartile">https://www.example.com/firstQuartile</Tracking>
 <Tracking event="midpoint">https://www.example.com/midpoint</Tracking>
 <Tracking event="thirdQuartile">https://www.example.com/thirdQuartile</Tracking>
