@@ -1,0 +1,16 @@
+{
+    "version": "1.0",
+    "uniqueId": "865d1edd88850fe6414781046837aead",
+    "title": "Archive_main_asset",
+    "description": "",
+    "width": 320,
+    "height": 480,
+    "events": {
+        "enabled": 0,
+        "list": {
+        }
+    },
+    "clicktags": {
+    },
+    "source": "index.html"
+}
