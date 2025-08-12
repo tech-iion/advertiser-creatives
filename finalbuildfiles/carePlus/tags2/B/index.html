@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-<script src="mraid.js"></script><!-- mraid.js file is loaded externally on mobile web and doesn't need to be served with banner -->
-<!-- Adform Global Clicktag -->
-<script>
-  var clickTag = "https://www.careplus.eu/nl/muggen-en-teken/beschermen/?utm_source=adform&utm_medium=engagementdisplay&utm_campaign=anti-insect&utm_content=versie_b";
-  
-  // Adform URI parameters utility function
-  window.getUriParams = function() {
-      var queryString = {};
-      var query = window.location.search.substring(1);
-      var keyValuePairs = query.split('&');
-      for (var i = 0; i < keyValuePairs.length; i++) {
-          var keyValuePair = keyValuePairs[i].split('=');
-          queryString[keyValuePair[0]] = decodeURIComponent(keyValuePair[1] || '');
-      }
-      return queryString;
-  };
-</script>    
-<meta charset="UTF-8" />
+    <script src="mraid.js"></script>
+    <!-- mraid.js file is loaded externally on mobile web and doesn't need to be served with banner -->
+    <!-- Adform Global Clicktag -->
+    <script>
+      var clickTag =
+        "https://www.careplus.eu/nl/muggen-en-teken/beschermen/?utm_source=adform&utm_medium=engagementdisplay&utm_campaign=anti-insect&utm_content=versie_b";
+
+      // Adform URI parameters utility function
+      window.getUriParams = function () {
+        var queryString = {};
+        var query = window.location.search.substring(1);
+        var keyValuePairs = query.split("&");
+        for (var i = 0; i < keyValuePairs.length; i++) {
+          var keyValuePair = keyValuePairs[i].split("=");
+          queryString[keyValuePair[0]] = decodeURIComponent(
+            keyValuePair[1] || ""
+          );
+        }
+        return queryString;
+      };
+    </script>
+    <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
@@ -30,7 +34,7 @@
         margin: 0;
         padding: 0;
         color: rgba(255, 255, 255, 0.87);
-        background-color: #F8F5EF;
+        background-color: #f8f5ef;
       }
 
       #app {
@@ -128,10 +132,10 @@
         left: 0;
         right: 0;
         margin: auto;
-        background-color: #F8F5EF;
+        background-color: #f8f5ef;
       }
       canvas {
-        background-color: #F8F5EF;
+        background-color: #f8f5ef;
       }
       #btnPosID {
         top: 0 !important;
@@ -142,12 +146,11 @@
         margin: auto !important;
       }
     </style>
-    <script type="module" crossorigin src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/carePlus/tags2/B/assets/index-XnYoNShM.js"></script>
-    <link rel="modulepreload" crossorigin href="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/carePlus/tags2/B/assets/phaser-C2RWnc_5.js">
+    <script type="module" crossorigin src="./assets/index-XnYoNShM.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/phaser-C2RWnc_5.js" />
   </head>
 
   <body>
-    
     <div class="dummy">
       <p>Hello</p>
       <p>Hello</p>
@@ -165,36 +168,36 @@
         border: 1px solid red;
       "
     >
-    <button
-    onclick="window.open(clickTag)"
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 0;
-        height: 0;
-        opacity: 0;
-        z-index: -1;
-      "
-      id="openctaButton"
-    >
-      Click
-    </button>
+      <button
+        onclick="window.open(clickTag)"
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 0;
+          opacity: 0;
+          z-index: -1;
+        "
+        id="openctaButton"
+      >
+        Click
+      </button>
 
-    <button
-      style="
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 0;
-        opacity: 0;
-        z-index: -1;
-      "
-      id="ontryagainButton"
-    >
-      Click
-    </button>
+      <button
+        style="
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 0;
+          opacity: 0;
+          z-index: -1;
+        "
+        id="ontryagainButton"
+      >
+        Click
+      </button>
     </div>
 
     <div id="app">
@@ -203,30 +206,41 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
       //GAM
-      window.trackingPath = "https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/carePlus/tags2/B/assets";
+      window.trackingPath =
+        "https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/carePlus/tags2/B/assets";
       window.trackingType =
         "https://staging-dmp-producer.iion.io/tracker/impressions?platform=Adform&campaign_id=__ADFCAMID__&publisher_id=__ADFPUBID__&creative_id=__ADFCRID__&request_id=__ADFREQID__&user_id=__ADFUID__&ip_address=__IP__&app_id_bundle_id=__BUNDLE__&maid=__IFA__&app_name=__APPNAME__&os=__OS__&user_agent=__UA__&latitude=__LAT__&longitude=__LON__&page_url=__PAGEURL__&country=__COUNTRY__&device_make=__DEVICEMAKE__&domain=__DOMAIN__&height=__H__&width=__W__&gdpr=__GDPR__&gdpr_consent=__GDPRCONSENT__&demand_id=__BIDID__&line_item=__ADFGROUPID__&event_name=";
       window.setTracker = "%%clickUrl%%";
       window.landingPageUrl =
         "https://www.careplus.eu/nl/muggen-en-teken/beschermen/?utm_source=adform&utm_medium=engagementdisplay&utm_campaign=anti-insect&utm_content=versie_b";
-      
+
       // Adform clickTag handling
-      if (typeof clickTag === 'string' && clickTag === "") {
+      if (typeof clickTag === "string" && clickTag === "") {
         try {
-          if (window.getUriParams !== undefined && window.getUriParams().clickTAG !== undefined) {
+          if (
+            window.getUriParams !== undefined &&
+            window.getUriParams().clickTAG !== undefined
+          ) {
             clickTag = window.getUriParams().clickTAG;
-          } else if (window.getUriParams !== undefined && window.getUriParams().clicktag !== undefined) {
+          } else if (
+            window.getUriParams !== undefined &&
+            window.getUriParams().clicktag !== undefined
+          ) {
             clickTag = window.getUriParams().clicktag;
-          } else if (document.location.search.indexOf('clickTAG') !== -1) {
-            clickTag = document.location.search.substr(document.location.search.indexOf('clickTAG') + 9);
-          } else if (document.location.search.indexOf('clicktag') !== -1) {
-            clickTag = document.location.search.substr(document.location.search.indexOf('clicktag') + 9);
+          } else if (document.location.search.indexOf("clickTAG") !== -1) {
+            clickTag = document.location.search.substr(
+              document.location.search.indexOf("clickTAG") + 9
+            );
+          } else if (document.location.search.indexOf("clicktag") !== -1) {
+            clickTag = document.location.search.substr(
+              document.location.search.indexOf("clicktag") + 9
+            );
           }
-        } catch(e) {
-          console.log('Error getting clickTag:', e);
+        } catch (e) {
+          console.log("Error getting clickTag:", e);
         }
       }
-      
+
       // Fallback to landingPageUrl if clickTag is still empty
       if (!clickTag) {
         clickTag = window.landingPageUrl;
