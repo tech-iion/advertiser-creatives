@@ -1,0 +1,3 @@
+document.write('<iframe src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/carePlus/tags3/A/index.html?clickTAG=%%c1;cpdir=https://www.careplus.eu/nl/muggen-en-teken/beschermen/?utm_source=adform&utm_medium=engagementdisplay&utm_campaign=anti-insect&utm_content=versie_a" ' +
+    'width="320px" height="400px" frameborder="0" scrolling="no" ' +
+    'allow="autoplay; fullscreen; encrypted-media;"></iframe>');

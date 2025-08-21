@@ -1,0 +1,17 @@
+{
+    "version": "1.0",
+    "uniqueId": "4e3f51963be3ec2c796c701d39ddea89",
+    "title": "CarePlusA_main_asset",
+    "description": "",
+    "width": 320,
+    "height": 400,
+    "events": {
+        "enabled": 0,
+        "list": {
+        }
+    },
+    "clicktags": {
+        "%%c1;cpdir=": "https:\/\/www.careplus.eu\/nl\/muggen-en-teken\/beschermen\/?utm_source=adform&utm_medium=engagementdisplay&utm_campaign=anti-insect&utm_content=versie_a"
+    },
+    "source": "index.html"
+}
