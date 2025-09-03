@@ -1,0 +1,3 @@
+document.write('<iframe src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/transportLogistiekNederland/tags/playable/index.html?clickTAG=%%c1;cpdir=https://hetluktalleenmetlogistiek.nl?utm_source=adform&utm_medium=game&utm_campaign=hetluktalleenmetlogistiek&utm_content=playable" ' +
+    'width="320px" height="480px" frameborder="0" scrolling="no" ' +
+    'allow="autoplay; fullscreen; encrypted-media;"></iframe>');
