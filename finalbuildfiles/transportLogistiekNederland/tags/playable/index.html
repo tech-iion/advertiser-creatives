@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head><!--Adform Global Clicktag START-->
-<script type="text/javascript">
-    function adfOpenGlobalClickTAG() {
-        var adfClickTAGName = 'clickTAG',
-            adfClickTAGUrl = 'https://hetluktalleenmetlogistiek.nl?utm_source=adform&utm_medium=game&utm_campaign=hetluktalleenmetlogistiek&utm_content=playable';
+  <script src="mraid.js"></script>
+  <!-- mraid.js file is loaded externally on mobile web and doesn't need to be served with banner -->
+  <!-- Adform Global Clicktag -->
+<script>
+  var clickTag =
+    "https://hetluktalleenmetlogistiek.nl?utm_source=adform&utm_medium=game&utm_campaign=hetluktalleenmetlogistiek&utm_content=playable";
 
-        window.open(dhtml.getVar(adfClickTAGName, adfClickTAGUrl), dhtml.getVar('landingPageTarget', '_blank'));
+  // Adform URI parameters utility function
+  window.getUriParams = function () {
+    var queryString = {};
+    var query = window.location.search.substring(1);
+    var keyValuePairs = query.split("&");
+    for (var i = 0; i < keyValuePairs.length; i++) {
+      var keyValuePair = keyValuePairs[i].split("=");
+      queryString[keyValuePair[0]] = decodeURIComponent(
+        keyValuePair[1] || ""
+      );
     }
-    if(window.document.addEventListener) {
-        window.document.addEventListener('click', function(e) {
-            if(e.button !== 0) return;
-            e.stopPropagation();
-            e.preventDefault();
-            adfOpenGlobalClickTAG();
-        }, true);
-    } else {
-        document.attachEvent('onclick', function() {
-            adfOpenGlobalClickTAG();
-        });
-    }
+    return queryString;
+  };
 </script>
 <style>
     html {
@@ -250,8 +250,39 @@
     <script> 
       window.trackingPath = "https://tech-iion.github.io/advertiser-creatives/TransportLogistiekNederland/playable/assets/images";
       window.trackingType =
-        "https://staging-dmp-producer.iion.io/tracker/impressions?platform=GAM&campaign_id=%ebuy!&publisher_id=%epid!&creative_id=%ecid!&maid=%%ADVERTISING_IDENTIFIER_PLAIN%%&page_url=%%SITE%%&height=%%HEIGHT%%&width=%%WIDTH%%&video_min_duration=%%VIDEO_DURATION%%&gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_XXXX}&demand_id=%eadv!&line_item=%eaid!&event_name=";
+        "https://staging-dmp-producer.iion.io/tracker/impressions?platform=Adform&campaign_id=__ADFCAMID__&publisher_id=__ADFPUBID__&creative_id=__ADFCRID__&request_id=__ADFREQID__&user_id=__ADFUID__&ip_address=__IP__&app_id_bundle_id=__BUNDLE__&maid=__IFA__&app_name=__APPNAME__&os=__OS__&user_agent=__UA__&latitude=__LAT__&longitude=__LON__&page_url=__PAGEURL__&country=__COUNTRY__&device_make=__DEVICEMAKE__&domain=__DOMAIN__&height=__H__&width=__W__&gdpr=__GDPR__&gdpr_consent=__GDPRCONSENT__&demand_id=__BIDID__&line_item=__ADFGROUPID__&event_name=";
       window.landingPageUrl = "https://hetluktalleenmetlogistiek.nl?utm_source=adform&utm_medium=game&utm_campaign=hetluktalleenmetlogistiek&utm_content=playable";
+    // Adform clickTag handling
+    if (typeof clickTag === "string" && clickTag === "") {
+        try {
+          if (
+            window.getUriParams !== undefined &&
+            window.getUriParams().clickTAG !== undefined
+          ) {
+            clickTag = window.getUriParams().clickTAG;
+          } else if (
+            window.getUriParams !== undefined &&
+            window.getUriParams().clicktag !== undefined
+          ) {
+            clickTag = window.getUriParams().clicktag;
+          } else if (document.location.search.indexOf("clickTAG") !== -1) {
+            clickTag = document.location.search.substr(
+              document.location.search.indexOf("clickTAG") + 9
+            );
+          } else if (document.location.search.indexOf("clicktag") !== -1) {
+            clickTag = document.location.search.substr(
+              document.location.search.indexOf("clicktag") + 9
+            );
+          }
+        } catch (e) {
+          console.log("Error getting clickTag:", e);
+        }
+      }
+
+      // Fallback to landingPageUrl if clickTag is still empty
+      if (!clickTag) {
+        clickTag = window.landingPageUrl;
+      }
     </script>
   </body>
 </html>
