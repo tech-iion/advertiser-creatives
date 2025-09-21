@@ -1,19 +1,30 @@
 <!DOCTYPE html>
-<html>
-	<head>
-        <style type = "text/css">
-            * {
-                padding: 0;
-                margin: 0;
-            }
-            body{
-                background: #000000;
-            }
-        </style>
-        <script src = "phaser.min.js"></script>
-        <script src = "game.js"></script>
-    </head>
-	<body>
-        <div id = "thegame"></div>
-	</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form with iframe</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe
+      id="myIframe"
+      width="320"
+      height="480"
+      src="https://tech-iion.github.io/advertiser-creatives/goldenGaytime/playable/"
+      frameborder="0"
+    ></iframe>
+  </body>
 </html>
