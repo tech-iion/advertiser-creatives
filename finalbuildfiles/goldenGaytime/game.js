@@ -37,6 +37,8 @@ class mainMenu extends Phaser.Scene {
     super("mainMenu");
   }
   preload() {
+
+    this.load.setPath(window.trackingPath);
     this.load.image("crate", "assets/sprites/crate.png");
     this.load.image("ground", "assets/sprites/ground.png");
     this.load.image("sky", "assets/sprites/sky.png");
