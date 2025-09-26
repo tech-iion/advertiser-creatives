@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      @font-face {
+        font-family: "ITCGoudySansStdBlack";
+        src: url("https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/goldenGaytime/assets/fonts/ITCGoudySansStdBlack.otf");
+      }
+      body {
+        background: #000000;
+      }
+      thegame {
+        font-family: "ITCGoudySansStdBlack !important";
+      }
+    </style>
+    <script src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/goldenGaytime/phaser.min.js"></script>
+    <script src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/goldenGaytime/game.js"></script>
+    <script>
+      //GAM
+      window.trackingPath =
+        "https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/goldenGaytime/";
+      window.trackingType =
+        "https://staging-dmp-producer.iion.io/tracker/impressions?platform=GAM&campaign_id=%ebuy!&publisher_id=%epid!&creative_id=%ecid!&maid=%%ADVERTISING_IDENTIFIER_PLAIN%%&page_url=%%SITE%%&height=%%HEIGHT%%&width=%%WIDTH%%&video_min_duration=%%VIDEO_DURATION%%&gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_XXXX}&demand_id=%eadv!&line_item=%eaid!&event_name=";
+      window.setTracker = "%%CLICK_URL_UNESC%%";
+      window.landingPageUrl =
+        window.setTracker +
+        "https://www.streetsicecream.com.au/p/golden-gaytime-slab-ice-cream-sandwich.html/09310016000521";
+    </script>
+  </head>
+  <body>
+    <div id="thegame"></div>
+  </body>
+</html>
