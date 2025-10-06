@@ -37,6 +37,7 @@ class mainMenu extends Phaser.Scene {
     super("mainMenu");
   }
   preload() {
+
     this.load.setPath(window.trackingPath);
     this.load.image("crate", "assets/sprites/crate.png");
     this.load.image("ground", "assets/sprites/ground.png");
@@ -84,8 +85,9 @@ class mainMenu extends Phaser.Scene {
 
     this.load.audio("crunchMP3", "assets/crunch.mp3");
     this.load.audio("hitMP3", "assets/hit.mp3");
+    
   }
-  fnfetchAPI(trackingURL) {
+  fnfetchAPI (trackingURL) {
     fetch(trackingURL, { method: "GET" })
       .then((response) => console.log("Tracking sent:", response.status))
       .catch((error) => console.error("Tracking error:", error));
@@ -180,7 +182,7 @@ class howtoplayGame extends Phaser.Scene {
     super("howtoplayGame");
   }
   preload() {}
-  fnfetchAPI(trackingURL) {
+  fnfetchAPI (trackingURL) {
     fetch(trackingURL, { method: "GET" })
       .then((response) => console.log("Tracking sent:", response.status))
       .catch((error) => console.error("Tracking error:", error));
@@ -309,7 +311,7 @@ class playGame extends Phaser.Scene {
     super("PlayGame");
   }
   preload() {}
-  fnfetchAPI(trackingURL) {
+  fnfetchAPI (trackingURL) {
     fetch(trackingURL, { method: "GET" })
       .then((response) => console.log("Tracking sent:", response.status))
       .catch((error) => console.error("Tracking error:", error));
@@ -320,16 +322,7 @@ class playGame extends Phaser.Scene {
     this.canDrop = true;
 
     this.randomIndex = 0;
-
-    // Initialize 30-second timer
-    this.gameTimer = 30;
-    this.timerEvent = this.time.addEvent({
-      delay: 1000,
-      callback: this.updateTimer,
-      callbackScope: this,
-      loop: true
-    });
-
+    
     this.hit = this.sound.add("hitMP3");
     this.towerHeight = 0;
     this.maxTowerHeight = 0;
@@ -416,25 +409,6 @@ class playGame extends Phaser.Scene {
     this.notificationText.setScrollFactor(0);
     this.notificationText.setDepth(1200);
     this.notificationText.setAlpha(0);
-
-    // Timer display
-    this.timerText = this.add.text(
-      game.config.width - 20,
-      20,
-      "Time: 30",
-      {
-        fontSize: "32px",
-        fill: "#572A31",
-        stroke: "#ffffff",
-        strokeThickness: 3,
-        fontFamily: "ITCGoudySansStdBlack",
-        align: "right",
-      }
-    );
-    this.timerText.setOrigin(1, 0);
-    this.timerText.setScrollFactor(0);
-    this.timerText.setDepth(1200);
-
     // Score display
     /* this.scoreText = this.add.text(10, 10, "Height: 0", {
       fontSize: "32px",
@@ -539,35 +513,6 @@ class playGame extends Phaser.Scene {
       repeat: -1,
     });
   }
-  
-  updateTimer() {
-    this.gameTimer--;
-    this.timerText.setText("Time: " + this.gameTimer);
-    
-    // Flash timer when under 10 seconds
-    if (this.gameTimer <= 10) {
-      this.timerText.setStyle({ fill: "#D32F2F" }); // Red color
-      this.tweens.add({
-        targets: this.timerText,
-        scaleX: 1.1,
-        scaleY: 1.1,
-        duration: 100,
-        yoyo: true,
-        ease: "Power2"
-      });
-    }
-    
-    // Time's up - go to end screen
-    if (this.gameTimer <= 0) {
-      this.timerEvent.remove();
-      this.canDrop = false;
-      this.movingCrate.visible = false;
-      this.hook.visible = false;
-      this.fnfetchAPI(window.trackingType + "TimeUp");
-      this.scene.start("endMenu");
-    }
-  }
-  
   checkCollision(e, b1, b2) {
     if (b1.isCrate && !b1.hit) {
       b1.hit = true;
@@ -588,8 +533,6 @@ class playGame extends Phaser.Scene {
         this.movingCrate.visible = false;
         this.hook.visible = false;
         this.canDrop = false;
-        // Stop the timer when game completes
-        this.timerEvent.remove();
         this.canvasConfetti();
       }
     }
@@ -612,8 +555,6 @@ class playGame extends Phaser.Scene {
         this.movingCrate.visible = false;
         this.hook.visible = false;
         this.canDrop = false;
-        // Stop the timer when game completes
-        this.timerEvent.remove();
         this.canvasConfetti();
       }
     }
@@ -822,12 +763,12 @@ class playGame extends Phaser.Scene {
     this.randomIndex++;
     // Stop any existing notification tweens
     this.tweens.killTweensOf(this.notificationText);
-    this.hit.play();
+this.hit.play();
     // Set the notification text and styling
     this.notificationText.setText(message);
     this.notificationText.setFontSize(40);
     this.notificationText.setStyle({ fill: "#572A31" }); // Normal brown color
-    this.fnfetchAPI(window.trackingType + "SlabDrop" + this.dropsCount);
+
     // Position notification at a fixed screen position
     this.notificationText.x = game.config.width / 2;
     this.notificationText.y = game.config.height * 0.35;
@@ -1092,7 +1033,7 @@ class endMenu extends Phaser.Scene {
     super("endMenu");
   }
   preload() {}
-  fnfetchAPI(trackingURL) {
+  fnfetchAPI (trackingURL) {
     fetch(trackingURL, { method: "GET" })
       .then((response) => console.log("Tracking sent:", response.status))
       .catch((error) => console.error("Tracking error:", error));
@@ -1124,7 +1065,7 @@ class endMenu extends Phaser.Scene {
     var finalSlab = this.add.image(0, 0, "finalSlab");
     finalSlab.x = game.config.width / 2;
     finalSlab.y = game.config.height * 0.5;
-    finalSlab.setOrigin(0.525, 0.5);
+    finalSlab.setOrigin(0.525,0.5);
     finalSlab.setScale(0.45);
 
     //tween shift slight effect x finalSlab
@@ -1156,7 +1097,11 @@ class endMenu extends Phaser.Scene {
     this.input.on(
       "pointerdown",
       function () {
-        window.open(window.landingPageUrl, "_blank");
+
+        window.open(
+          window.landingPageUrl,
+          "_blank"
+        );
       },
       this
     );
