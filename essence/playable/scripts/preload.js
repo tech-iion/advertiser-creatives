@@ -25,7 +25,7 @@ class Load extends Phaser.Scene {
 			}, 250);
 		}, this);
 		//load all game assets
-		this.load.image('teamvsteam','img/teamvsteam.jpg');
+		//this.load.image('teamvsteam','img/teamvsteam.jpg');
 		this.load.image('background','img/background1.png');
 		this.load.image('ball','img/ball.png');
 		this.load.image('bar','img/bar.png');
@@ -69,7 +69,7 @@ class Load extends Phaser.Scene {
 		this.load.image("jelbounce", "img/jelbounce.png");
 		this.load.image('tvst','img/tvst.png');
 		this.load.image('bgg','img/bg.png');
-		this.load.image('teamvsteam2','img/teamvsteam2.jpg');
+		//this.load.image('teamvsteam2','img/teamvsteam2.jpg');
 		this.load.image('ring','img/ring.png');
 		this.load.image('spray1','img/spray1.png');
 		this.load.image('spray2','img/spray2.png');
