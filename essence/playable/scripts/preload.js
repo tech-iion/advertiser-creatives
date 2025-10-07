@@ -17,7 +17,7 @@ class Load extends Phaser.Scene {
 		let progress = this.add.rectangle(config.width/2, 700, 560, 20, 0xA22C80);
 		progress.alpha = 0.8;
 		this.load.on('progress', (value)=>{
-			progress.width = (560*value)/2;
+			progress.width = (560*value);
 		});
 		this.load.on('complete', ()=>{
 			setTimeout(()=>{
