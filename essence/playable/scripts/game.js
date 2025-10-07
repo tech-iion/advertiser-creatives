@@ -625,6 +625,34 @@ class Game extends Phaser.Scene {
         ease: "Power2.easeOut",
       });
 
+      let tb = self.add
+        .sprite(config.width * 0.75, config.height * 0.275, "tb")
+        .setScale(1.25)
+        .setAlpha(0).setAngle(30);
+
+        tb.setDepth(10);
+      self.tweens.add({
+        targets: tb,
+        /*  y: config.height * 0.8,
+        scaleX: 1.35,
+        scaleY: 1.35, */
+        alpha: 1,
+        duration: 1200,
+        delay: 500,
+        ease: "Bounce.easeOut",
+      });
+
+      //tween rotate tb slightly on angle
+      self.tweens.add({
+        targets: tb,
+        angle:32,
+        duration: 1200,
+        delay: 500,
+        ease: "Bounce.easeOut",
+        repeat:-1,
+        yoyo:true
+      });
+
       // Character with slide in and fade
       let char = self.add.sprite(
         config.width * 0.4 - 100,
@@ -693,6 +721,8 @@ class Game extends Phaser.Scene {
         ease: "Bounce.easeOut",
       });
       console.log("ctabtn1");
+
+      
 
       let btncta = draw_button(360, config.height * 1.1, "btncta", self);
       btncta.setScale(0.5);

@@ -70,6 +70,7 @@ class Load extends Phaser.Scene {
 		this.load.image('spray2','img/spray2.png');
 		this.load.image('girl1','img/girl1.png');
 		this.load.audio('bgMusic', 'audio/bg.mp3');
+		this.load.image('tb','img/tb.png');
 		//this.load.image('bgcta','img/bgcta2.png');
 		
 	}
