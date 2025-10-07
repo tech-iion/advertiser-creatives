@@ -4,20 +4,25 @@ class Load extends Phaser.Scene {
 		super('load');
 	}
 	preload(){
+
+		this.add.sprite(360, 550, 'game_title').setScale(1.3);
 		/* this.add.sprite(config.width/2, config.height/2, 'background');
 		this.add.sprite(360, 230, 'game_title'); */
-		let bar = this.add.rectangle(config.width/2, 900, 600, 20);
-		bar.setStrokeStyle(4, 0xffffff);
-		bar.alpha = 0.7;
-		let progress = this.add.rectangle(config.width/2, 900, 590, 10, 0xffffff);
+		//game_title
+		let bar = this.add.rectangle(config.width/2, 700, 560, 20, 0xc9c9c9);
+		//bar.setStrokeStyle(4, 0x000000);
+		bar.width = 590;
+		bar.alpha = 0.8;
+		
+		let progress = this.add.rectangle(config.width/2, 700, 560, 20, 0xA22C80);
 		progress.alpha = 0.8;
 		this.load.on('progress', (value)=>{
-			progress.width = 590*value;
+			progress.width = (560*value)/2;
 		});
 		this.load.on('complete', ()=>{
 			setTimeout(()=>{
 				this.scene.start('menu');
-			}, 0);
+			}, 250);
 		}, this);
 		//load all game assets
 		this.load.image('teamvsteam','img/teamvsteam.jpg');

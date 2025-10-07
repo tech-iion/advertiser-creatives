@@ -4,7 +4,7 @@ class Boot extends Phaser.Scene {
   }
   preload() {
     //load some initial sprites
-
+    this.load.image("game_title", "img/game_title.png");
     /* this.load.image("game_title", "img/game_title.png");
     this.load.image("jelbounce", "img/jelbounce.png");
     this.load.image("teamvsteam", "img/teamvsteam.jpg"); */
