@@ -190,7 +190,7 @@ class Game extends Phaser.Scene {
 
       
 
-    let b_pause = draw_button(645, 55, "pause", self).setDepth(1);
+    let b_pause = draw_button(11645, 55, "pause", self).setDepth(1);
     //animasi move
     this.anims.create({
       key: "idle1",
