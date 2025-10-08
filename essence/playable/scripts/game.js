@@ -113,6 +113,11 @@ class Game extends Phaser.Scene {
   }
   create() {
     let self = this;
+    
+    // Hide CTA button when game starts/restarts
+    if (typeof hideCTAButton === 'function') {
+      hideCTAButton();
+    }
     let ball_speed = 450;
     let score = 0;
     let state = "wait";
@@ -190,7 +195,7 @@ class Game extends Phaser.Scene {
 
       
 
-    let b_pause = draw_button(11645, 55, "pause", self).setDepth(1);
+    let b_pause = draw_button(645, 55, "pause", self).setDepth(1);
     //animasi move
     this.anims.create({
       key: "idle1",
@@ -428,12 +433,20 @@ class Game extends Phaser.Scene {
                 self.target_x = config.width / 2;
                 self.anims.resumeAll();
                 fade_out_bg_music(500);
+                // Hide CTA button on restart
+                if (typeof hideCTAButton === 'function') {
+                  hideCTAButton();
+                }
                 self.scene.restart();
               } else if (obj.name === "menu") {
                 is_paused = false;
                 self.target_x = config.width / 2;
                 self.anims.resumeAll();
                 fade_out_bg_music(500);
+                // Hide CTA button when going to menu
+                if (typeof hideCTAButton === 'function') {
+                  hideCTAButton();
+                }
                 self.scene.start("menu");
               } else if (obj.name === "ctabtn1") {
                 // Handle CTA button click - could navigate to a URL or perform an action
@@ -762,13 +775,14 @@ class Game extends Phaser.Scene {
           });
         },
       });
-
-      self.input.on("pointerdown", (pointer) => {
-        /* this.input.off("pointerdown");
-        console.log(pointer); */
-        window.open("https://www.essence.eu/en-gb/p/954235/bouncy-plump-smoothing-primer", "_blank");
-        play_sound("click", self);
-      });
+      
+      // Show the HTML CTA button after animations complete
+      setTimeout(() => {
+        if (typeof showCTAButton === 'function') {
+          showCTAButton();
+        }
+      }, 0); // Show after 2 seconds to let game over animations complete
+      
     }
     
     //end
