@@ -322,7 +322,7 @@ class playGame extends Phaser.Scene {
     this.randomIndex = 0;
 
     // Initialize 30-second timer
-    this.gameTimer = 30;
+    this.gameTimer = 40;
     this.timerEvent = this.time.addEvent({
       delay: 1000,
       callback: this.updateTimer,
