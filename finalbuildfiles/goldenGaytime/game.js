@@ -55,7 +55,7 @@ class mainMenu extends Phaser.Scene {
     this.load.image("finalSlab", "assets/sprites/finalSlab.png");
     this.load.image("hook", "assets/sprites/hook.png");
 
-    this.load.image("cloud1", "assets/sprites/items/cloud1.png");
+    /* this.load.image("cloud1", "assets/sprites/items/cloud1.png");
     this.load.image("cloud2", "assets/sprites/items/cloud2.png");
     this.load.image("cloud3", "assets/sprites/items/cloud3.png");
     this.load.image("plane", "assets/sprites/items/plane.png");
@@ -65,9 +65,9 @@ class mainMenu extends Phaser.Scene {
     this.load.image("rocket", "assets/sprites/items/rocket.png");
     this.load.image("planet1", "assets/sprites/items/planet1.png");
     this.load.image("planet2", "assets/sprites/items/planet2.png");
-    this.load.image("planet3", "assets/sprites/items/planet3.png");
+    this.load.image("planet3", "assets/sprites/items/planet3.png"); */
 
-    this.load.image("crumbs01", "assets/sprites/crumbs/Crumb_01.png");
+    /* this.load.image("crumbs01", "assets/sprites/crumbs/Crumb_01.png");
     this.load.image("crumbs02", "assets/sprites/crumbs/Crumb_02.png");
     this.load.image("crumbs03", "assets/sprites/crumbs/Crumb_03.png");
     this.load.image("crumbs04", "assets/sprites/crumbs/Crumb_04.png");
@@ -80,7 +80,7 @@ class mainMenu extends Phaser.Scene {
     this.load.image("crumbs11", "assets/sprites/crumbs/Crumb_11.png");
     this.load.image("crumbs12", "assets/sprites/crumbs/Crumb_12.png");
     this.load.image("crumbs13", "assets/sprites/crumbs/Crumb_13.png");
-    this.load.image("crumbs14", "assets/sprites/crumbs/Crumb_14.png");
+    this.load.image("crumbs14", "assets/sprites/crumbs/Crumb_14.png"); */
 
     this.load.audio("crunchMP3", "assets/crunch.mp3");
     this.load.audio("hitMP3", "assets/hit.mp3");
