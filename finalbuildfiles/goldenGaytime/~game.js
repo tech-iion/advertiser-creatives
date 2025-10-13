@@ -55,7 +55,7 @@ class mainMenu extends Phaser.Scene {
     this.load.image("finalSlab", "assets/sprites/finalSlab.png");
     this.load.image("hook", "assets/sprites/hook.png");
 
-    this.load.image("cloud1", "assets/sprites/items/cloud1.png");
+    /* this.load.image("cloud1", "assets/sprites/items/cloud1.png");
     this.load.image("cloud2", "assets/sprites/items/cloud2.png");
     this.load.image("cloud3", "assets/sprites/items/cloud3.png");
     this.load.image("plane", "assets/sprites/items/plane.png");
@@ -65,7 +65,7 @@ class mainMenu extends Phaser.Scene {
     this.load.image("rocket", "assets/sprites/items/rocket.png");
     this.load.image("planet1", "assets/sprites/items/planet1.png");
     this.load.image("planet2", "assets/sprites/items/planet2.png");
-    this.load.image("planet3", "assets/sprites/items/planet3.png");
+    this.load.image("planet3", "assets/sprites/items/planet3.png"); */
 
     this.load.image("crumbs01", "assets/sprites/crumbs/Crumb_01.png");
     this.load.image("crumbs02", "assets/sprites/crumbs/Crumb_02.png");
@@ -322,12 +322,12 @@ class playGame extends Phaser.Scene {
     this.randomIndex = 0;
 
     // Initialize 30-second timer
-    this.gameTimer = 30;
+    this.gameTimer = 40;
     this.timerEvent = this.time.addEvent({
       delay: 1000,
       callback: this.updateTimer,
       callbackScope: this,
-      loop: true,
+      loop: true
     });
 
     this.hit = this.sound.add("hitMP3");
@@ -418,14 +418,19 @@ class playGame extends Phaser.Scene {
     this.notificationText.setAlpha(0);
 
     // Timer display
-    this.timerText = this.add.text(game.config.width * 4, 20, "Time: 30", {
-      fontSize: "32px",
-      fill: "#572A31",
-      stroke: "#ffffff",
-      strokeThickness: 3,
-      fontFamily: "ITCGoudySansStdBlack",
-      align: "right",
-    });
+    this.timerText = this.add.text(
+      game.config.width - 20,
+      20,
+      "Time: 30",
+      {
+        fontSize: "32px",
+        fill: "#572A31",
+        stroke: "#ffffff",
+        strokeThickness: 3,
+        fontFamily: "ITCGoudySansStdBlack",
+        align: "right",
+      }
+    );
     this.timerText.setOrigin(1, 0);
     this.timerText.setScrollFactor(0);
     this.timerText.setDepth(1200);
@@ -534,11 +539,11 @@ class playGame extends Phaser.Scene {
       repeat: -1,
     });
   }
-
+  
   updateTimer() {
     this.gameTimer--;
     this.timerText.setText("Time: " + this.gameTimer);
-
+    
     // Flash timer when under 10 seconds
     if (this.gameTimer <= 10) {
       this.timerText.setStyle({ fill: "#D32F2F" }); // Red color
@@ -548,10 +553,10 @@ class playGame extends Phaser.Scene {
         scaleY: 1.1,
         duration: 100,
         yoyo: true,
-        ease: "Power2",
+        ease: "Power2"
       });
     }
-
+    
     // Time's up - go to end screen
     if (this.gameTimer <= 0) {
       this.timerEvent.remove();
@@ -562,7 +567,7 @@ class playGame extends Phaser.Scene {
       this.scene.start("endMenu");
     }
   }
-
+  
   checkCollision(e, b1, b2) {
     if (b1.isCrate && !b1.hit) {
       b1.hit = true;
@@ -576,7 +581,7 @@ class playGame extends Phaser.Scene {
       this.manageBlockPhysics();
 
       // Only continue if tower height is less than 12
-      if (this.dropsCount < 6) {
+      if (this.towerHeight < 12) {
         this.nextCrate();
       } else {
         // Game completed - hide moving crate
@@ -600,7 +605,7 @@ class playGame extends Phaser.Scene {
       this.manageBlockPhysics();
 
       // Only continue if tower height is less than 12
-      if (this.dropsCount < 6) {
+      if (this.towerHeight < 12) {
         this.nextCrate();
       } else {
         // Game completed - hide moving crate
@@ -758,7 +763,7 @@ class playGame extends Phaser.Scene {
     /* if (this.sky.y > skyTopLimit) { */
     /* console.log("completed",this.sky.y,this.sky.y + this.sky.displayHeight / 8); */
     var y = this.sky.y + this.sky.displayHeight * 0.1;
-    console.log(skyTopLimit - y, skyTopLimit / 2);
+    console.log(skyTopLimit - y, skyTopLimit / 4);
     if (skyTopLimit - y > skyTopLimit / 4) {
       this.tweens.add({
         targets: this.sky,
@@ -784,17 +789,12 @@ class playGame extends Phaser.Scene {
 
     // Keep moving crate at fixed position on screen
     // No need to update its Y position since it has setScrollFactor(0)
-    console.log(this.dropsCount, "dropCrate");
+
     // Move camera UP to follow the tower (negative scrollY moves camera up)
     // Keep the highest point of the tower in the center-bottom area of screen
-    let targetY = 0;
-    if (this.dropsCount > 2) {
-      targetY = highestY - game.config.height * 0.5; // Keep tower at 70% down from top of screen
-    } else {
-      targetY = highestY - game.config.height * 0.6;
-    }
+    let targetY = highestY - game.config.height * 0.7; // Keep tower at 70% down from top of screen
     //check if 10 are stacked and if so dont move the camera
-    if (this.towerHeight >= 6) {
+    if (this.towerHeight >= 10) {
       return;
     }
     this.tweens.add({
