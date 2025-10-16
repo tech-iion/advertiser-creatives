@@ -113,9 +113,9 @@ class Game extends Phaser.Scene {
   }
   create() {
     let self = this;
-    
+
     // Hide CTA button when game starts/restarts
-    if (typeof hideCTAButton === 'function') {
+    if (typeof hideCTAButton === "function") {
       hideCTAButton();
     }
     let ball_speed = 450;
@@ -193,12 +193,18 @@ class Game extends Phaser.Scene {
       .setOrigin(0.5)
       .setDepth(1);
 
-      if(window.language == "Polish"){
-        self.txt_notify.setText("Ruszaj po zwycięstwo!\n\nPrzesuń, aby odbić piłkę \ni podtrzymaj passę!");
-      }
-      if(window.language == "German"){
-        self.txt_notify.setText("Rallye zum Sieg!\n\nWische, \num den Ball zurückzuschlagen \nund halte deine Serie am Laufen.");
-      }
+    if (window.language == "Polish") {
+      //self.txt_notify.setText("Ruszaj po zwycięstwo!\n\nPrzesuń, aby odbić piłkę \ni podtrzymaj passę!");
+      self.txt_notify.setText(
+        "Ruszaj po zwycięstwo!\n\n Przesuń, aby odbić piłkę \ni podtrzymać serię!"
+      );
+    }
+    if (window.language == "German") {
+      //Rallye zum Sieg!Wische, um den Ball zurückzuschlagen und halte deine Serie am Laufen.
+      self.txt_notify.setText(
+        "Rallye zum Sieg!\n\nWische, \num den Ball zurückzuschlagen \nund halte deine Serie am Laufen."
+      );
+    }
 
     let b_pause = draw_button(645, 55, "pause", self).setDepth(1);
     //animasi move
@@ -439,7 +445,7 @@ class Game extends Phaser.Scene {
                 self.anims.resumeAll();
                 fade_out_bg_music(500);
                 // Hide CTA button on restart
-                if (typeof hideCTAButton === 'function') {
+                if (typeof hideCTAButton === "function") {
                   hideCTAButton();
                 }
                 self.scene.restart();
@@ -449,7 +455,7 @@ class Game extends Phaser.Scene {
                 self.anims.resumeAll();
                 fade_out_bg_music(500);
                 // Hide CTA button when going to menu
-                if (typeof hideCTAButton === 'function') {
+                if (typeof hideCTAButton === "function") {
                   hideCTAButton();
                 }
                 self.scene.start("menu");
@@ -550,7 +556,7 @@ class Game extends Phaser.Scene {
     }
     function ballHit2(ball, player2) {
       play_sound("ball2", self);
-      
+
       if (state == "play") {
         anm_player2.anims.play("swing2", true);
         self.physics.moveTo(ball, get_random_x(), config.height, ball_speed);
@@ -619,10 +625,10 @@ class Game extends Phaser.Scene {
       state = "gameover";
       //play_sound("gameover", self);
       play_sound("bouncy_fave", self);
-      
+
       // Fade out background music
       fade_out_bg_music(1500);
-      
+
       is_paused = true;
       self.move_to = "";
       self.anims.pauseAll();
@@ -646,9 +652,10 @@ class Game extends Phaser.Scene {
       let tb = self.add
         .sprite(config.width * 0.75, config.height * 0.275, "tb")
         .setScale(1.25)
-        .setAlpha(0).setAngle(30);
+        .setAlpha(0)
+        .setAngle(30);
 
-        tb.setDepth(10);
+      tb.setDepth(10);
       self.tweens.add({
         targets: tb,
         /*  y: config.height * 0.8,
@@ -663,12 +670,12 @@ class Game extends Phaser.Scene {
       //tween rotate tb slightly on angle
       self.tweens.add({
         targets: tb,
-        angle:32,
+        angle: 32,
         duration: 1200,
         delay: 500,
         ease: "Bounce.easeOut",
-        repeat:-1,
-        yoyo:true
+        repeat: -1,
+        yoyo: true,
       });
 
       // Character with slide in and fade
@@ -740,8 +747,6 @@ class Game extends Phaser.Scene {
       });
       console.log("ctabtn1");
 
-      
-
       let btncta = draw_button(360, config.height * 1.1, "btncta", self);
       btncta.setScale(0.5);
       btncta.setAlpha(1);
@@ -780,21 +785,17 @@ class Game extends Phaser.Scene {
           });
         },
       });
-      
+
       // Show the HTML CTA button after animations complete
       setTimeout(() => {
-        if (typeof showCTAButton === 'function') {
+        if (typeof showCTAButton === "function") {
           showCTAButton();
         }
       }, 0); // Show after 2 seconds to let game over animations complete
-      
     }
-    
+
     //end
   }
-
-  
-  
 }
 var config = {
   type: Phaser.AUTO,

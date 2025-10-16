@@ -84,10 +84,7 @@
     <script>
       function handleCTAClick() {
         console.log("CTA button clicked - opening URL");
-        window.open(
-          "https://www.essence.eu/en-de/ms/jelly-vs-bouncy",
-          "_blank"
-        );
+        window.open(window.ctaurl, "_blank");
       }
 
       function showCTAButton() {
@@ -130,6 +127,11 @@
     <div id="cta-button" onclick="handleCTAClick()">PLAY NOW!</div>
     <script>
       window.language = "German";
+      if(window.language == "Polish"){
+        window.ctaurl = "https://www.essence.eu/pl-pl/ms/jelly-vs-bouncy";
+      }else if(window.language == "German"){
+        window.ctaurl = "https://www.essence.eu/en-de/ms/jelly-vs-bouncy";
+      }
     </script>
     <script type="text/javascript" src="scripts/lib.js"></script>
     <script type="text/javascript" src="scripts/boot.js"></script>
