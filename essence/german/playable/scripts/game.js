@@ -197,7 +197,7 @@ class Game extends Phaser.Scene {
         self.txt_notify.setText("Ruszaj po zwycięstwo!\n\nPrzesuń, aby odbić piłkę \ni podtrzymaj passę!");
       }
       if(window.language == "German"){
-        self.txt_notify.setText("Rallye für den Sieg!\n\nWischen Sie, \num den Ball zurückzuschlagen \nund Ihre Serie am Leben zu erhalten!");
+        self.txt_notify.setText("Rallye zum Sieg!\n\nWische, \num den Ball zurückzuschlagen \nund halte deine Serie am Laufen.");
       }
 
     let b_pause = draw_button(645, 55, "pause", self).setDepth(1);
