@@ -206,7 +206,7 @@ class Game extends Phaser.Scene {
       );
     }
 
-    let b_pause = draw_button(645, 55, "pause", self).setDepth(1);
+    /* let b_pause = draw_button(111645, 55, "pause", self).setDepth(1); */
     //animasi move
     this.anims.create({
       key: "idle1",
@@ -590,7 +590,7 @@ class Game extends Phaser.Scene {
       self.move_to = "";
       //bar_score.setDepth(0);
       //bar_bestscore.setDepth(0);
-      b_pause.setDepth(0);
+      /* b_pause.setDepth(0); */
       txt_score.setDepth(0);
       txt_bestscore.setDepth(0);
       anm_player1.setDepth(0);
