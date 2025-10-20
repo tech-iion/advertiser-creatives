@@ -4,6 +4,7 @@ class Load extends Phaser.Scene {
 		super('load');
 	}
 	preload(){
+		this.load.setPath('http://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Oct/jellyfishEssence/');
 
 		this.add.sprite(360, 550, 'game_title').setScale(1.3);
 		/* this.add.sprite(config.width/2, config.height/2, 'background');
