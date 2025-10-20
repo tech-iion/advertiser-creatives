@@ -3,7 +3,7 @@ class Boot extends Phaser.Scene {
     super("boot");
   }
   preload() {
-    this.load.setPath('http://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Oct/jellyfishEssence/');
+    this.load.setPath('https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Oct/jellyfishEssence/');
     //load some initial sprites
     this.load.image("game_title", "img/game_title.png");
     /* this.load.image("game_title", "img/game_title.png");
