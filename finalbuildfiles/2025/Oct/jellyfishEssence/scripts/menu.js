@@ -14,6 +14,13 @@ class Menu extends Phaser.Scene {
   constructor() {
     super("menu");
   }
+
+  fnfetchAPI(trackingURL) {
+    fetch(trackingURL, { method: "GET" })
+      .then((response) => console.log("Tracking sent:", response.status))
+      .catch((error) => console.error("Tracking error:", error));
+  }
+
   create() {
     var self = this;
     
@@ -201,6 +208,8 @@ this.input.on("pointerdown", (pointer) => {
 		ease: "Power2.easeIn"
 	});
 	
+  this.fnfetchAPI(window.trackingType+"PlayableStart");
+
 	this.tweens.add({
 		targets: fadeOverlay,
 		alpha: 1,

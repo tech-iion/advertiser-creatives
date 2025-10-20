@@ -111,6 +111,13 @@ class Game extends Phaser.Scene {
       }
     }
   }
+
+  fnfetchAPI(trackingURL) {
+    fetch(trackingURL, { method: "GET" })
+      .then((response) => console.log("Tracking sent:", response.status))
+      .catch((error) => console.error("Tracking error:", error));
+  }
+
   create() {
     let self = this;
 
@@ -313,6 +320,7 @@ class Game extends Phaser.Scene {
         if (state == "wait") {
           trigger_play({ x: 360, y: 900 });
         }
+        
         let key = event.key;
         if (key == "ArrowLeft" && self.p1_anim_state != "swing") {
           if (state == "play") {
@@ -487,6 +495,7 @@ class Game extends Phaser.Scene {
           state = "play";
           self.hand.setVisible(false);
           self.txt_notify.setVisible(false);
+          self.fnfetchAPI(window.trackingType+"HowToPlay");
           self.ball.setVelocityY(ball_speed);
         }
       }
@@ -531,6 +540,7 @@ class Game extends Phaser.Scene {
     }
     function ballHit1(ball, player1) {
       play_sound("ball1", self);
+      self.fnfetchAPI(window.trackingType+"BouncyHit");
       score += 1;
       update_score();
       self.move_to = "";
@@ -556,7 +566,7 @@ class Game extends Phaser.Scene {
     }
     function ballHit2(ball, player2) {
       play_sound("ball2", self);
-
+self.fnfetchAPI(window.trackingType+"JellyHit");
       if (state == "play") {
         anm_player2.anims.play("swing2", true);
         self.physics.moveTo(ball, get_random_x(), config.height, ball_speed);
@@ -628,7 +638,7 @@ class Game extends Phaser.Scene {
 
       // Fade out background music
       fade_out_bg_music(1500);
-
+self.fnfetchAPI(window.trackingType+"PlayableComplete");
       is_paused = true;
       self.move_to = "";
       self.anims.pauseAll();
