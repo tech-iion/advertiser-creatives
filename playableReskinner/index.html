@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playable Ads Reskinner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+
+        .upload-section:hover {
+            border-color: #764ba2;
+            background: #f0f0ff;
+        }
+
+        .upload-section.dragging {
+            background: #e8e8ff;
+            border-color: #764ba2;
+            transform: scale(1.02);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .asset-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .asset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .asset-preview {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .asset-preview img,
+        .asset-preview audio,
+        .asset-preview video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .asset-info {
+            margin-bottom: 10px;
+        }
+
+        .asset-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .asset-type {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .replace-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .replace-btn:hover {
+            background: #764ba2;
+        }
+
+        .dimension-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe5b4 100%);
+            color: #856404;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #ffc107;
+            font-size: 0.85em;
+            text-align: center;
+            font-weight: 500;
+            animation: warningPulse 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(255, 193, 7, 0.2);
+        }
+        
+        @keyframes warningPulse {
+            0% { transform: scale(0.95); opacity: 0; }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .asset-card.replaced {
+            border-color: #28a745;
+            border-width: 3px;
+            background: linear-gradient(to bottom, #f0fff4 0%, white 100%);
+        }
+
+        .asset-preview.split-preview {
+            background: linear-gradient(90deg, #f8f9fa 50%, #e8f5e9 50%);
+            overflow: visible;
+            cursor: pointer;
+        }
+        
+        .split-preview::after {
+            content: 'VS';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: #666;
+            padding: 4px 8px;
+            border-radius: 50%;
+            font-size: 0.7em;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        .split-preview:hover::after {
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 0.5;
+        }
+        
+        .split-preview .preview-side {
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        
+        .split-preview:hover .preview-side:hover {
+            transform: scale(1.05);
+            z-index: 20;
+            filter: brightness(1.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(17, 153, 142, 0.3);
+        }
+
+        .generate-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .preview-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .preview-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.3);
+        }
+
+        .preview-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+
+        .preview-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-modal.active {
+            display: flex;
+        }
+
+        .preview-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
+        }
+
+        .close-preview {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .preview-iframe {
+            width: 800px;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #333;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Playable Ads Reskinner</h1>
+            <p>Upload your Webpack Phaser build and reskin it with new assets</p>
+        </div>
+
+        <div class="main-content">
+            <div class="upload-section" id="uploadSection">
+                <h2>📁 Upload Playable Folder</h2>
+                <p style="margin: 20px 0;">Drag and drop your build folder here or click to browse</p>
+                <div class="file-input-wrapper">
+                    <label for="folderInput" class="upload-btn">Choose Folder</label>
+                    <input type="file" id="folderInput" webkitdirectory directory multiple>
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 15px;">Processing files...</p>
+            </div>
+
+            <div id="statusMessage"></div>
+
+            <div id="assetsContainer" style="display: none;">
+                <h2 class="section-title">🖼️ Current Assets</h2>
+                <div class="assets-grid" id="assetsGrid"></div>
+
+                <div class="action-buttons">
+                    <button class="action-btn preview-btn" id="previewBtn" disabled>👁️ Preview Original</button>
+                    <button class="action-btn generate-btn" id="generateBtn" disabled>✨ Generate Reskinned Build</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-modal" id="previewModal">
+        <div class="preview-content">
+            <button class="close-preview" id="closePreview">✕ Close</button>
+            <h2 style="margin-bottom: 20px;">Game Preview</h2>
+            <iframe id="previewIframe" class="preview-iframe"></iframe>
+        </div>
+    </div>
+
+    <script>
+        let originalFiles = {};
+        let replacementFiles = {};
+        let assetFiles = [];
+        let htmlFile = null;
+
+        const uploadSection = document.getElementById('uploadSection');
+        const folderInput = document.getElementById('folderInput');
+        const assetsGrid = document.getElementById('assetsGrid');
+        const assetsContainer = document.getElementById('assetsContainer');
+        const statusMessage = document.getElementById('statusMessage');
+        const loading = document.getElementById('loading');
+        const generateBtn = document.getElementById('generateBtn');
+        const previewBtn = document.getElementById('previewBtn');
+        const previewModal = document.getElementById('previewModal');
+        const closePreview = document.getElementById('closePreview');
+        const previewIframe = document.getElementById('previewIframe');
+
+        // Drag and drop handlers
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.classList.add('dragging');
+        });
+
+        uploadSection.addEventListener('dragleave', () => {
+            uploadSection.classList.remove('dragging');
+        });
+
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.classList.remove('dragging');
+            const items = e.dataTransfer.items;
+            handleFolderDrop(items);
+        });
+
+        folderInput.addEventListener('change', (e) => {
+            handleFileInput(e.target.files);
+        });
+
+        async function handleFolderDrop(items) {
+            loading.classList.add('active');
+            const files = [];
+            
+            for (let item of items) {
+                const entry = item.webkitGetAsEntry();
+                if (entry) {
+                    await traverseFileTree(entry, '', files);
+                }
+            }
+            
+            processFiles(files);
+        }
+
+        async function traverseFileTree(entry, path, files) {
+            if (entry.isFile) {
+                const file = await new Promise(resolve => entry.file(resolve));
+                file.fullPath = path + file.name;
+                files.push(file);
+            } else if (entry.isDirectory) {
+                const reader = entry.createReader();
+                const entries = await new Promise(resolve => reader.readEntries(resolve));
+                for (let e of entries) {
+                    await traverseFileTree(e, path + entry.name + '/', files);
+                }
+            }
+        }
+
+        function handleFileInput(files) {
+            loading.classList.add('active');
+            const fileArray = Array.from(files).map(file => {
+                file.fullPath = file.webkitRelativePath;
+                return file;
+            });
+            processFiles(fileArray);
+        }
+
+        function processFiles(files) {
+            originalFiles = {};
+            assetFiles = [];
+            htmlFile = null;
+
+            const assetExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.mp3', '.wav', '.ogg', '.json'];
+            
+            files.forEach(file => {
+                const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+                originalFiles[file.fullPath] = file;
+
+                if (assetExtensions.includes(ext)) {
+                    assetFiles.push(file);
+                }
+
+                if (file.name.endsWith('.html')) {
+                    htmlFile = file;
+                }
+            });
+
+            if (assetFiles.length === 0) {
+                showStatus('No assets found in the uploaded folder', 'error');
+                loading.classList.remove('active');
+                return;
+            }
+
+            displayAssets();
+            showStatus(`Successfully loaded ${Object.keys(originalFiles).length} files with ${assetFiles.length} assets`, 'success');
+            loading.classList.remove('active');
+            assetsContainer.style.display = 'block';
+            previewBtn.disabled = !htmlFile;
+            generateBtn.disabled = false;
+        }
+
+        function displayAssets() {
+            // Clean up old blob URLs before clearing
+            const oldCards = assetsGrid.querySelectorAll('.asset-card');
+            oldCards.forEach(card => {
+                if (card.blobUrls) {
+                    card.blobUrls.forEach(url => URL.revokeObjectURL(url));
+                }
+            });
+            
+            assetsGrid.innerHTML = '';
+            
+            assetFiles.forEach((file, index) => {
+                const card = document.createElement('div');
+                card.className = 'asset-card';
+                
+                const preview = document.createElement('div');
+                preview.className = 'asset-preview';
+                
+                const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+                
+                if (['.png', '.jpg', '.jpeg', '.gif', '.svg'].includes(ext)) {
+                    const img = document.createElement('img');
+                    const imgUrl = URL.createObjectURL(file);
+                    img.src = imgUrl;
+                    
+                    // Store URL for cleanup
+                    if (!card.blobUrls) card.blobUrls = [];
+                    card.blobUrls.push(imgUrl);
+                    
+                    // Capture image dimensions when loaded
+                    img.onload = function() {
+                        const dimensions = document.createElement('div');
+                        dimensions.className = 'asset-dimensions';
+                        dimensions.innerHTML = `${this.naturalWidth} × ${this.naturalHeight}px`;
+                        dimensions.style.cssText = 'position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.85em;';
+                        preview.appendChild(dimensions);
+                        
+                        // Also add dimensions to info section after image loads
+                        const infoDiv = card.querySelector('.asset-info');
+                        if (infoDiv && !infoDiv.querySelector('.asset-dimensions-info')) {
+                            const dimInfo = document.createElement('div');
+                            dimInfo.className = 'asset-type asset-dimensions-info';
+                            dimInfo.textContent = `Dimensions: ${this.naturalWidth} × ${this.naturalHeight}px`;
+                            infoDiv.appendChild(dimInfo);
+                        }
+                        
+                        // Store dimensions for later reference
+                        file.imageDimensions = {
+                            width: this.naturalWidth,
+                            height: this.naturalHeight
+                        };
+                    };
+                    
+                    preview.appendChild(img);
+                } else if (['.mp3', '.wav', '.ogg'].includes(ext)) {
+                    const audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = URL.createObjectURL(file);
+                    preview.appendChild(audio);
+                } else if (ext === '.json') {
+                    preview.innerHTML = '<div style="font-size: 3em;">📄</div>';
+                } else {
+                    preview.innerHTML = '<div style="font-size: 3em;">📦</div>';
+                }
+                
+                const info = document.createElement('div');
+                info.className = 'asset-info';
+                info.innerHTML = `
+                    <div class="asset-name">${file.name}</div>
+                    <div class="asset-type">Type: ${ext.substring(1).toUpperCase()}</div>
+                    <div class="asset-type">Size: ${(file.size / 1024).toFixed(2)} KB</div>
+                `;
+                
+                const replaceBtn = document.createElement('button');
+                replaceBtn.className = 'replace-btn';
+                replaceBtn.textContent = '🔄 Replace Asset';
+                replaceBtn.onclick = () => replaceAsset(file.fullPath, index);
+                
+                card.appendChild(preview);
+                card.appendChild(info);
+                card.appendChild(replaceBtn);
+                assetsGrid.appendChild(card);
+            });
+        }
+
+        function replaceAsset(originalPath, index) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = assetFiles[index].name.substring(assetFiles[index].name.lastIndexOf('.'));
+            input.onchange = (e) => {
+                const newFile = e.target.files[0];
+                if (newFile) {
+                    const originalFile = assetFiles[index];
+                    
+                    // Check dimensions for image files
+                    if (originalFile.imageDimensions) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const img = new Image();
+                            img.onload = function() {
+                                const newWidth = this.naturalWidth;
+                                const newHeight = this.naturalHeight;
+                                const origWidth = originalFile.imageDimensions.width;
+                                const origHeight = originalFile.imageDimensions.height;
+                                
+                                // Find the asset card for this file
+                                const cards = document.querySelectorAll('.asset-card');
+                                const card = cards[index];
+                                
+                                // Create split preview
+                                const preview = card.querySelector('.asset-preview');
+                                if (preview) {
+                                    preview.innerHTML = '';
+                                    preview.classList.add('split-preview');
+                                    
+                                    // Create split container
+                                    const splitContainer = document.createElement('div');
+                                    splitContainer.style.cssText = 'display: flex; width: 100%; height: 100%; position: relative;';
+                                    
+                                    // Original image side
+                                    const originalSide = document.createElement('div');
+                                    originalSide.className = 'preview-side';
+                                    originalSide.style.cssText = 'flex: 1; display: flex; align-items: center; justify-content: center; position: relative; border-right: 2px solid #fff; overflow: hidden;';
+                                    const originalImg = document.createElement('img');
+                                    originalImg.src = URL.createObjectURL(originalFile);
+                                    originalImg.style.cssText = 'max-width: 100%; max-height: 100%; object-fit: contain;';
+                                    
+                                    const originalLabel = document.createElement('div');
+                                    originalLabel.style.cssText = 'position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.75em; font-weight: bold;';
+                                    originalLabel.textContent = 'BEFORE';
+                                    
+                                    const originalDims = document.createElement('div');
+                                    originalDims.style.cssText = 'position: absolute; bottom: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.7em;';
+                                    originalDims.textContent = `${origWidth}×${origHeight}px`;
+                                    
+                                    originalSide.appendChild(originalImg);
+                                    originalSide.appendChild(originalLabel);
+                                    originalSide.appendChild(originalDims);
+                                    
+                                    // New image side
+                                    const newSide = document.createElement('div');
+                                    newSide.className = 'preview-side';
+                                    newSide.style.cssText = 'flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;';
+                                    const newImg = document.createElement('img');
+                                    newImg.src = event.target.result;
+                                    newImg.style.cssText = 'max-width: 100%; max-height: 100%; object-fit: contain;';
+                                    
+                                    const newLabel = document.createElement('div');
+                                    newLabel.style.cssText = 'position: absolute; top: 5px; right: 5px; background: rgba(40, 167, 69, 0.9); color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.75em; font-weight: bold;';
+                                    newLabel.textContent = 'AFTER';
+                                    
+                                    const newDims = document.createElement('div');
+                                    newDims.style.cssText = 'position: absolute; bottom: 5px; right: 5px; background: rgba(40, 167, 69, 0.9); color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.7em;';
+                                    newDims.textContent = `${newWidth}×${newHeight}px`;
+                                    
+                                    newSide.appendChild(newImg);
+                                    newSide.appendChild(newLabel);
+                                    newSide.appendChild(newDims);
+                                    
+                                    splitContainer.appendChild(originalSide);
+                                    splitContainer.appendChild(newSide);
+                                    preview.appendChild(splitContainer);
+                                }
+                                
+                                // Remove any existing warning
+                                const existingWarning = card.querySelector('.dimension-warning');
+                                if (existingWarning) {
+                                    existingWarning.remove();
+                                }
+                                
+                                if (newWidth !== origWidth || newHeight !== origHeight) {
+                                    // Add warning to the card itself
+                                    const warning = document.createElement('div');
+                                    warning.className = 'dimension-warning';
+                                    warning.innerHTML = `⚠️ Dimension mismatch!<br>Original: ${origWidth}×${origHeight}px | New: ${newWidth}×${newHeight}px`;
+                                    
+                                    // Insert warning after asset info
+                                    const info = card.querySelector('.asset-info');
+                                    info.parentNode.insertBefore(warning, info.nextSibling);
+                                    
+                                    showStatus(`Asset replaced with dimension warning`, 'info');
+                                } else {
+                                    showStatus(`✓ Asset replaced successfully`, 'success');
+                                }
+                                
+                                // Mark card as replaced
+                                card.classList.add('replaced');
+                                
+                                // Update button text
+                                const btn = card.querySelector('.replace-btn');
+                                if (btn) {
+                                    btn.textContent = '✅ Replaced - Click to Change';
+                                    btn.style.background = '#28a745';
+                                }
+                                
+                                replacementFiles[originalPath] = newFile;
+                            };
+                            img.src = event.target.result;
+                        };
+                        reader.readAsDataURL(newFile);
+                    } else {
+                        // For non-image files, add a replacement indicator
+                        const cards = document.querySelectorAll('.asset-card');
+                        const card = cards[index];
+                        card.classList.add('replaced');
+                        
+                        // Add replacement badge to preview
+                        const preview = card.querySelector('.asset-preview');
+                        if (preview) {
+                            const replacedBadge = document.createElement('div');
+                            replacedBadge.className = 'replaced-badge';
+                            replacedBadge.style.cssText = 'position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #28a745, #20c997); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.85em; font-weight: bold; box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3); z-index: 10;';
+                            replacedBadge.innerHTML = '✅ Replaced';
+                            
+                            // Remove any existing badge
+                            const existingBadge = preview.querySelector('.replaced-badge');
+                            if (existingBadge) existingBadge.remove();
+                            
+                            preview.appendChild(replacedBadge);
+                        }
+                        
+                        // Update button text
+                        const btn = card.querySelector('.replace-btn');
+                        if (btn) {
+                            btn.textContent = '✅ Replaced - Click to Change';
+                            btn.style.background = '#28a745';
+                        }
+                        
+                        replacementFiles[originalPath] = newFile;
+                        showStatus(`✓ Asset "${originalFile.name}" replaced successfully`, 'success');
+                    }
+                }
+            };
+            input.click();
+        }
+
+        async function generateReskinnedBuild() {
+            loading.classList.add('active');
+            generateBtn.disabled = true;
+
+            try {
+                const JSZip = await loadJSZip();
+                const zip = new JSZip();
+                
+                // Copy all original files
+                for (let [path, file] of Object.entries(originalFiles)) {
+                    // Use replacement if available
+                    const fileToUse = replacementFiles[path] || file;
+                    const content = await fileToUse.arrayBuffer();
+                    zip.file(path, content);
+                }
+                
+                // Generate the zip
+                const blob = await zip.generateAsync({type: 'blob'});
+                
+                // Download
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'reskinned-build.zip';
+                a.click();
+                
+                showStatus('Reskinned build generated successfully!', 'success');
+            } catch (error) {
+                showStatus('Error generating build: ' + error.message, 'error');
+            }
+            
+            loading.classList.remove('active');
+            generateBtn.disabled = false;
+        }
+
+        function showPreview() {
+            if (!htmlFile) return;
+            
+            // Create a blob URL for the HTML file
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const blob = new Blob([e.target.result], {type: 'text/html'});
+                const url = URL.createObjectURL(blob);
+                previewIframe.src = url;
+                previewModal.classList.add('active');
+            };
+            reader.readAsText(htmlFile);
+        }
+
+        function showStatus(message, type) {
+            statusMessage.innerHTML = `<div class="status-message status-${type}">${message}</div>`;
+            setTimeout(() => {
+                statusMessage.innerHTML = '';
+            }, 5000);
+        }
+
+        async function loadJSZip() {
+            if (window.JSZip) return window.JSZip;
+            
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+                script.onload = () => resolve(window.JSZip);
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        generateBtn.addEventListener('click', generateReskinnedBuild);
+        previewBtn.addEventListener('click', showPreview);
+        closePreview.addEventListener('click', () => {
+            previewModal.classList.remove('active');
+            previewIframe.src = '';
+        });
+    </script>
+</body>
+</html>
