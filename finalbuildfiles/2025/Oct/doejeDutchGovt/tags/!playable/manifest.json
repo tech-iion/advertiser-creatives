@@ -1,0 +1,17 @@
+{
+    "version": "1.0",
+    "uniqueId": "6152544ddb0402c336a14a022051a2a8",
+    "title": "TLN_main_asset",
+    "description": "",
+    "width": 320,
+    "height": 480,
+    "events": {
+        "enabled": 0,
+        "list": {
+        }
+    },
+    "clicktags": {
+        "clickTAG": "https:\/\/hetluktalleenmetlogistiek.nl?utm_source=adform&utm_medium=game&utm_campaign=hetluktalleenmetlogistiek&utm_content=playable"
+    },
+    "source": "index.html"
+}

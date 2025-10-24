@@ -1,0 +1,17 @@
+{
+    "version": "1.0",
+    "uniqueId": "3a00884773b8c8088e342c3ac813d253",
+    "title": "TLN320 400_main_asset",
+    "description": "",
+    "width": 320,
+    "height": 400,
+    "events": {
+        "enabled": 0,
+        "list": {
+        }
+    },
+    "clicktags": {
+        "clickTAG": "https:\/\/hetluktalleenmetlogistiek.nl?utm_source=adform&utm_medium=game&utm_campaign=hetluktalleenmetlogistiek&utm_content=playable"
+    },
+    "source": "index.html"
+}
