@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+  <head><!--Adform Global Clicktag START-->
+<script src="mraid.js"></script>
+    <!-- mraid.js file is loaded externally on mobile web and doesn't need to be served with banner -->
+    <!-- Adform Global Clicktag -->
+    <script>
+      var clickTag =
+        "https://veiliginternetten.nl/doe-je-updates/";
+
+      // Adform URI parameters utility function
+      window.getUriParams = function () {
+        var queryString = {};
+        var query = window.location.search.substring(1);
+        var keyValuePairs = query.split("&");
+        for (var i = 0; i < keyValuePairs.length; i++) {
+          var keyValuePair = keyValuePairs[i].split("=");
+          queryString[keyValuePair[0]] = decodeURIComponent(
+            keyValuePair[1] || ""
+          );
+        }
+        return queryString;
+      };
+    </script>
+<style>
+    html {
+        cursor: pointer;
+    }
+</style>
+<!--Adform Global Clicktag END-->
+
+<script src="mraid.js"></script><!-- mraid.js file is loaded externally on mobile web and doesn't need to be served with banner -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="./favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://tech-iion.github.io/advertiser-creatives/liloStitchPlayable/style.css"
-    />
-    <title>BK KIDS EAT FREE</title>
+
+    <title>Dutch Govt: Doeje</title>
 
     <style>
       body {
@@ -42,12 +67,10 @@
         src: url("assets/img/Franchise-Free-Bold.ttf");
       }
 
-       @font-face {
+      @font-face {
         font-family: "RijksoverheidSansHeading";
         src: url("assets/img/RijksoverheidSansHeading-Regular_2_0.otf");
       }
-
-      
 
       .dummy p {
         opacity: 1;
@@ -57,9 +80,9 @@
         font-family: "Franchise";
       }
 
-     .dummy p:nth-child(2) {
-      font-family: "RijksoverheidSansHeading";
-     }
+      .dummy p:nth-child(2) {
+        font-family: "RijksoverheidSansHeading";
+      }
 
       .cooking-progress-container {
         display: none;
@@ -111,26 +134,18 @@
       canvas {
         background-color: #4db1e5;
       }
+
+      #cta-button{
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
     </style>
-    <script type="module" crossorigin src="./assets/index-DfYyzyXd.js"></script>
+    <script type="module" crossorigin src="./assets/index-BXTStNkX.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/phaser-C2RWnc_5.js">
   </head>
 
   <body>
-    <canvas
-      id="confetti-canvas"
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        touch-action: none;
-        pointer-events: none;
-        background: transparent !important;
-        z-index: 10000;
-      "
-    ></canvas>
     <div class="dummy">
       <p>Hello</p>
       <p>Hello</p>
@@ -141,17 +156,47 @@
     <div id="app">
       <div id="game-container"></div>
     </div>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script> -->
+
+    <a id="cta-button" onclick="window.open(clickTag, '_blank')" target="_blank"></a>
+
     <script>
       window.bottomtext = "";
-      //GAM
+      //AdForm
       window.trackingPath = "assets/img/";
       window.trackingType =
-        "https://staging-dmp-producer.iion.io/tracker/impressions?platform=GAM&campaign_id=%ebuy!&publisher_id=%epid!&creative_id=%ecid!&maid=%%ADVERTISING_IDENTIFIER_PLAIN%%&page_url=%%SITE%%&height=%%HEIGHT%%&width=%%WIDTH%%&video_min_duration=%%VIDEO_DURATION%%&gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_XXXX}&demand_id=%eadv!&line_item=%eaid!&event_name=";
-      window.setTracker = "%%CLICK_URL_UNESC%%";
-      window.landingPageUrl =
-        window.setTracker +
-        "https://www.doejeupdates.nl";
+        "https://staging-dmp-producer.iion.io/tracker/impressions?platform=Adform&campaign_id=3983807&publisher_id=iion&event_name=impressions";
+      window.landingPageUrl = "https://veiliginternetten.nl/doe-je-updates/";
+      // Adform clickTag handling
+      if (typeof clickTag === "string" && clickTag === "") {
+        try {
+          if (
+            window.getUriParams !== undefined &&
+            window.getUriParams().clickTAG !== undefined
+          ) {
+            clickTag = window.getUriParams().clickTAG;
+          } else if (
+            window.getUriParams !== undefined &&
+            window.getUriParams().clicktag !== undefined
+          ) {
+            clickTag = window.getUriParams().clicktag;
+          } else if (document.location.search.indexOf("clickTAG") !== -1) {
+            clickTag = document.location.search.substr(
+              document.location.search.indexOf("clickTAG") + 9
+            );
+          } else if (document.location.search.indexOf("clicktag") !== -1) {
+            clickTag = document.location.search.substr(
+              document.location.search.indexOf("clicktag") + 9
+            );
+          }
+        } catch (e) {
+          console.log("Error getting clickTag:", e);
+        }
+      }
+
+      // Fallback to landingPageUrl if clickTag is still empty
+      if (!clickTag) {
+        clickTag = window.landingPageUrl;
+      }
     </script>
   </body>
 </html>

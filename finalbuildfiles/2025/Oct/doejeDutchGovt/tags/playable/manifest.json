@@ -1,0 +1,17 @@
+{
+    "version": "1.0",
+    "uniqueId": "8cf8a233b52fff3a75f89590c76b0f93",
+    "title": "Adform_main_asset",
+    "description": "",
+    "width": 320,
+    "height": 480,
+    "events": {
+        "enabled": 0,
+        "list": {
+        }
+    },
+    "clicktags": {
+        "clickTAG": "https:\/\/veiliginternetten.nl\/doe-je-updates\/"
+    },
+    "source": "index.html"
+}
