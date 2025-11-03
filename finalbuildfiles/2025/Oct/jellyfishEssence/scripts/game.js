@@ -648,7 +648,7 @@ self.fnfetchAPI(window.trackingType+"PlayableComplete");
 
       // Background with fade in effect
       let bg = self.add.sprite(config.width * 0.5, config.height / 2, "bgcta2");
-      bg.setScale(1);
+      bg.setScale(5);
       bg.flipX = true;
       bg.setAlpha(0);
       bg.setDepth(10);
