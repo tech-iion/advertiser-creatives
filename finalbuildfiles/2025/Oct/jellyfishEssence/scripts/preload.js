@@ -29,7 +29,9 @@ class Load extends Phaser.Scene {
 		});
 		this.load.on('complete', ()=>{
 			this.fnfetchAPI(window.trackingType+"AdLoaded");
+			window.openTimer = true;
 			setTimeout(()=>{
+				
 				this.scene.start('menu');
 			}, 250);
 		}, this);

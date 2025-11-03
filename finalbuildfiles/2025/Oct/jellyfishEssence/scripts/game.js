@@ -639,6 +639,7 @@ self.fnfetchAPI(window.trackingType+"JellyHit");
       // Fade out background music
       fade_out_bg_music(1500);
 self.fnfetchAPI(window.trackingType+"PlayableComplete");
+window.openTimer = false;
       is_paused = true;
       self.move_to = "";
       self.anims.pauseAll();
