@@ -90,7 +90,7 @@ function remove_data(key) {
   localStorage.removeItem(key);
 }
 window.openTimer = false;
-startPlayableTimer();
+/* startPlayableTimer(); */
 function startPlayableTimer() {
   let timer = 0;
   let interval = setInterval(() => {
