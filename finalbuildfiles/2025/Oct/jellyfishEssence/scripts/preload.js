@@ -28,8 +28,6 @@ class Load extends Phaser.Scene {
 			progress.width = (560*value);
 		});
 		this.load.on('complete', ()=>{
-			this.fnfetchAPI(window.trackingType+"AdLoaded");
-			window.openTimer = true;
 			setTimeout(()=>{
 				
 				this.scene.start('menu');
