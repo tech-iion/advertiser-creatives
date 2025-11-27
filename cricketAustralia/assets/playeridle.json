@@ -4,408 +4,30 @@
 			"image": "playeridle.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 1055,
-				"h": 1757
+				"w": 278,
+				"h": 831
 			},
 			"scale": 1,
 			"frames": [
-				{
-					"filename": "playeridle05.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 209,
-						"h": 442
-					},
-					"frame": {
-						"x": 1,
-						"y": 1,
-						"w": 209,
-						"h": 442
-					}
-				},
-				{
-					"filename": "playeridle08.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 209,
-						"h": 442
-					},
-					"frame": {
-						"x": 212,
-						"y": 1,
-						"w": 209,
-						"h": 442
-					}
-				},
-				{
-					"filename": "playeridle11.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 209,
-						"h": 442
-					},
-					"frame": {
-						"x": 423,
-						"y": 1,
-						"w": 209,
-						"h": 442
-					}
-				},
-				{
-					"filename": "playeridle14.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 209,
-						"h": 442
-					},
-					"frame": {
-						"x": 634,
-						"y": 1,
-						"w": 209,
-						"h": 442
-					}
-				},
 				{
 					"filename": "playeridle02.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 209,
+						"w": 283,
 						"h": 442
 					},
 					"spriteSourceSize": {
-						"x": 0,
+						"x": 6,
+						"y": 31,
+						"w": 276,
+						"h": 411
+					},
+					"frame": {
+						"x": 1,
 						"y": 1,
-						"w": 209,
-						"h": 441
-					},
-					"frame": {
-						"x": 845,
-						"y": 1,
-						"w": 209,
-						"h": 441
-					}
-				},
-				{
-					"filename": "playeridle17.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 2,
-						"w": 209,
-						"h": 440
-					},
-					"frame": {
-						"x": 845,
-						"y": 444,
-						"w": 209,
-						"h": 440
-					}
-				},
-				{
-					"filename": "playeridle19.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 3,
-						"w": 209,
-						"h": 439
-					},
-					"frame": {
-						"x": 1,
-						"y": 445,
-						"w": 209,
-						"h": 439
-					}
-				},
-				{
-					"filename": "playeridle20.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 3,
-						"w": 209,
-						"h": 439
-					},
-					"frame": {
-						"x": 212,
-						"y": 445,
-						"w": 209,
-						"h": 439
-					}
-				},
-				{
-					"filename": "playeridle03.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 4,
-						"w": 209,
-						"h": 438
-					},
-					"frame": {
-						"x": 423,
-						"y": 445,
-						"w": 209,
-						"h": 438
-					}
-				},
-				{
-					"filename": "playeridle16.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 5,
-						"w": 209,
-						"h": 437
-					},
-					"frame": {
-						"x": 423,
-						"y": 885,
-						"w": 209,
-						"h": 437
-					}
-				},
-				{
-					"filename": "playeridle06.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 6,
-						"w": 209,
-						"h": 436
-					},
-					"frame": {
-						"x": 1,
-						"y": 886,
-						"w": 209,
-						"h": 436
-					}
-				},
-				{
-					"filename": "playeridle13.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 6,
-						"w": 209,
-						"h": 436
-					},
-					"frame": {
-						"x": 212,
-						"y": 886,
-						"w": 209,
-						"h": 436
-					}
-				},
-				{
-					"filename": "playeridle09.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 7,
-						"w": 209,
-						"h": 435
-					},
-					"frame": {
-						"x": 634,
-						"y": 445,
-						"w": 209,
-						"h": 435
-					}
-				},
-				{
-					"filename": "playeridle10.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 8,
-						"w": 209,
-						"h": 434
-					},
-					"frame": {
-						"x": 634,
-						"y": 882,
-						"w": 209,
-						"h": 434
-					}
-				},
-				{
-					"filename": "playeridle12.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 8,
-						"w": 209,
-						"h": 434
-					},
-					"frame": {
-						"x": 845,
-						"y": 886,
-						"w": 209,
-						"h": 434
-					}
-				},
-				{
-					"filename": "playeridle07.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 9,
-						"w": 209,
-						"h": 433
-					},
-					"frame": {
-						"x": 634,
-						"y": 1318,
-						"w": 209,
-						"h": 433
-					}
-				},
-				{
-					"filename": "playeridle15.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 10,
-						"w": 209,
-						"h": 432
-					},
-					"frame": {
-						"x": 1,
-						"y": 1324,
-						"w": 209,
-						"h": 432
-					}
-				},
-				{
-					"filename": "playeridle04.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 11,
-						"w": 209,
-						"h": 431
-					},
-					"frame": {
-						"x": 212,
-						"y": 1324,
-						"w": 209,
-						"h": 431
-					}
-				},
-				{
-					"filename": "playeridle18.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 11,
-						"w": 209,
-						"h": 431
-					},
-					"frame": {
-						"x": 423,
-						"y": 1324,
-						"w": 209,
-						"h": 431
+						"w": 276,
+						"h": 411
 					}
 				},
 				{
@@ -413,41 +35,20 @@
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 209,
+						"w": 283,
 						"h": 442
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 13,
-						"w": 209,
-						"h": 429
+						"x": 6,
+						"y": 26,
+						"w": 273,
+						"h": 416
 					},
 					"frame": {
-						"x": 845,
-						"y": 1322,
-						"w": 209,
-						"h": 429
-					}
-				},
-				{
-					"filename": "playeridle21.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 209,
-						"h": 442
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 3,
-						"h": 3
-					},
-					"frame": {
-						"x": 634,
-						"y": 1753,
-						"w": 3,
-						"h": 3
+						"x": 1,
+						"y": 414,
+						"w": 273,
+						"h": 416
 					}
 				}
 			]
@@ -456,6 +57,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:da208c15d638b290ae86f86fd76c2f8b:dfc16cee878e12e70a61986e12252a73:1a712338f00bda6b5807f6b64fd21bdd$"
+		"smartupdate": "$TexturePacker:SmartUpdate:23689b64bb4d4b6c3f29bec428f05b6a:dbea67a065c7804f1d470ac1b0dea3ab:1a712338f00bda6b5807f6b64fd21bdd$"
 	}
 }
