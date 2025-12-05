@@ -36,17 +36,17 @@
 
     @font-face {
       font-family: "interBold";
-      src: url("https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Dec/xboxGamePass/assets/fonts/InterBold.ttf");
+      src: url("assets/fonts/InterBold.ttf");
     }
 
     @font-face {
       font-family: "interExtraBold";
-      src: url("https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Dec/xboxGamePass/assets/fonts/InterExtraBold.ttf");
+      src: url("assets/fonts/InterExtraBold.ttf");
     }
 
     @font-face {
       font-family: "interMedium";
-      src: url("https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Dec/xboxGamePass/assets/fonts/InterMedium.ttf");
+      src: url("assets/fonts/InterMedium.ttf");
     }
 
     .dummy p {
@@ -87,21 +87,9 @@
     .updatebg {
       background: linear-gradient(to bottom, #000000, #1DE21D);
     }
-
-    #ctaopen{
-      width: 0;
-      height:0;
-      position: fixed;
-      top: 0;bottom: 0;left: 0;right: 0;
-      z-index: -1;
-      margin: auto;
-      background: transparent;
-      border:none;
-    }
-
   </style>
-  <script type="module" crossorigin src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Dec/xboxGamePass/assets/index-CN54i6Wt.js"></script>
-  <link rel="modulepreload" crossorigin href="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Dec/xboxGamePass/assets/phaser-C2RWnc_5.js">
+  <script type="module" crossorigin src="./assets/index-BmBUk9v-.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/phaser-C2RWnc_5.js">
 </head>
 
 <body>
@@ -114,21 +102,18 @@
   <div id="app">
     <div id="game-container"></div>
   </div>
-
-  <button id="ctaopen"></button>
-
   <script>
     window.option = "";
     window.bottomtext = "";
     //GAM
-    window.trackingPath = "https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Dec/xboxGamePass/assets/";
+    window.trackingPath = "assets/";
     window.trackingType =
       "https://staging-dmp-producer.iion.io/tracker/impressions?platform=GAM&campaign_id=%ebuy!&publisher_id=%epid!&creative_id=%ecid!&maid=%%ADVERTISING_IDENTIFIER_PLAIN%%&page_url=%%SITE%%&height=%%HEIGHT%%&width=%%WIDTH%%&video_min_duration=%%VIDEO_DURATION%%&gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_XXXX}&demand_id=%eadv!&line_item=%eaid!&event_name=";
-    window.setTracker = "%%CLICK_URL_UNESC%%";
+    window.setTracker = "";//"%%CLICK_URL_UNESC%%";
     window.landingPageUrl =
       window.setTracker +
       "https://ad.doubleclick.net/ddm/trackclk/N572608.5055899IIONGAMING/B34664859.433420987;dc_trk_aid=626679033;dc_trk_cid=245366319;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};gpp=${GPP_STRING_755};gpp_sid=${GPP_SID};ltd=;dc_tdv=1";
-    
+    document.querySelector("canvas").classList.add("updatebg");
   </script>
 </body>
 
