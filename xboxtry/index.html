@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xbox Playable Ad</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      color: rgba(255, 255, 255, 0.87);
+      background-color: #C82E24;
+    }
+
+    #app {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dummy {
+      position: fixed !important;
+      height: 100%;
+      width: auto;
+      left: 0;
+      right: 0;
+      margin: auto;
+      opacity: 0;
+    }
+
+    @font-face {
+      font-family: "interBold";
+      src: url("assets/fonts/InterBold.ttf");
+    }
+
+    @font-face {
+      font-family: "interExtraBold";
+      src: url("assets/fonts/InterExtraBold.ttf");
+    }
+
+    @font-face {
+      font-family: "interMedium";
+      src: url("assets/fonts/InterMedium.ttf");
+    }
+
+    .dummy p {
+      opacity: 1;
+    }
+
+    .dummy p:nth-child(1) {
+      font-family: "interBold";
+    }
+
+    .dummy p:nth-child(2) {
+      font-family: "interExtraBold";
+    }
+
+    .dummy p:nth-child(3) {
+      font-family: "interMedium";
+    }
+
+    #app {
+      position: fixed !important;
+      height: 100%;
+      width: auto;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background-color: #ffffff;
+    }
+
+    canvas {
+
+      transition: background 0.5s ease-in-out;
+    }
+
+    #game-container canvas {
+      background: linear-gradient(to bottom, #000000, #000000, #1DE21D);
+    }
+
+    .updatebg {
+      background: linear-gradient(to bottom, #000000, #1DE21D);
+    }
+
+    #ctaopen{
+      width: 0;
+      height:0;
+      position: fixed;
+      top: 0;bottom: 0;left: 0;right: 0;
+      z-index: -1;
+      margin: auto;
+      background: transparent;
+    }
+
+  </style>
+  <script type="module" crossorigin src="./assets/index-D95Z2k-y.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/phaser-C2RWnc_5.js">
+</head>
+
+<body>
+  <div class="dummy">
+    <p>Hello</p>
+    <p>Hello</p>
+    <p>Hello</p>
+  </div>
+
+  <div id="app">
+    <div id="game-container"></div>
+  </div>
+
+  <button id="ctaopen"></button>
+
+  <script>
+    window.option = "";
+    window.bottomtext = "";
+    //GAM
+    window.trackingPath = "assets/";
+    window.trackingType =
+      "https://staging-dmp-producer.iion.io/tracker/impressions?platform=GAM&campaign_id=%ebuy!&publisher_id=%epid!&creative_id=%ecid!&maid=%%ADVERTISING_IDENTIFIER_PLAIN%%&page_url=%%SITE%%&height=%%HEIGHT%%&width=%%WIDTH%%&video_min_duration=%%VIDEO_DURATION%%&gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_XXXX}&demand_id=%eadv!&line_item=%eaid!&event_name=";
+    window.setTracker = "";//"%%CLICK_URL_UNESC%%";
+    window.landingPageUrl =
+      window.setTracker +
+      "https://ad.doubleclick.net/ddm/trackclk/N572608.5055899IIONGAMING/B34664859.433420987;dc_trk_aid=626679033;dc_trk_cid=245366319;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};gpp=${GPP_STRING_755};gpp_sid=${GPP_SID};ltd=;dc_tdv=1";
+    document.querySelector("canvas").classList.add("updatebg");
+  </script>
+</body>
+
+</html>
