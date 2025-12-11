@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title>Stairs Game</title>
+  <script type="module" crossorigin src="./assets/index-D2kW4VE_.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CELLr_n6.css">
+</head>
+
+<body>
+    <!-- Video container at the top of the game -->
+    <div id="video-container">
+        <video id="game-video" preload="auto" volume="0.25" playsinline>
+            <source src="./assets/video-CmqBBckk.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div id="thegame"></div>
+    <div id="final-screen">
+        <img id="final-bg" src="./assets/finalpage-DFQjKlmq.png" alt="Game Over">
+        <img id="final-logo" src="./assets/finallogo-DhkMdYM1.png" alt="Logo">
+    </div>
+    <script>
+        setTimeout(() => {
+            console.log(document.querySelector('canvas').style.width);
+            document.getElementById('video-container').style.width = document.querySelector('canvas').style.width + "px";
+        }, 1000);
+    </script>
+</body>
+
+</html>
