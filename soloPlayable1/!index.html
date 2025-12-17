@@ -8,11 +8,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="./assets/index-Dy-SL1yq.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-vhRB2Ldw.css">
+  <script type="module" crossorigin src="./assets/index-B3tnekiu.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BN_M2FZ8.css">
 </head>
 
 <body>
+    <!-- Loading screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
     <!-- Video container at the top of the game -->
     <div id="video-container">
         <video id="game-video" preload="auto" muted
@@ -23,8 +31,22 @@
                 type="video/mp4">
         </video>
     </div>
+    <!-- Video drawer toggle (centered, outside container so it stays visible) -->
+    <div id="video-toggle">
+        <!-- <div class="drawer-handle"></div> -->
+        <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 15L12 9L6 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+    <!-- Score counter below video -->
+    <div id="score-container">
+        <img id="score-icon"
+            src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Dec/solomyob_videoPlayable1/assets/invoice-icon.png"
+            alt="$">
+        <span id="score-value">0</span>
+    </div>
     <!-- Mute/Unmute button -->
-    <button id="audio-toggle" class="muted">
+    <div id="audio-toggle" class="muted">
         <svg class="icon-muted" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="white" stroke-width="2" stroke-linecap="round"
                 stroke-linejoin="round" />
@@ -40,29 +62,7 @@
             <path d="M18.07 5.93C19.9447 7.80528 20.9979 10.3478 20.9979 13C20.9979 15.6522 19.9447 18.1947 18.07 20.07"
                 stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-    </button>
-    <!-- Loading screen -->
-    <div id="loading-screen">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <p>Loading...</p>
-        </div>
     </div>
-    <!-- Video drawer toggle (centered, outside container so it stays visible) -->
-    <button id="video-toggle">
-        <!-- <div class="drawer-handle"></div> -->
-        <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 15L12 9L6 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-    </button>
-    <!-- Score counter below video -->
-    <div id="score-container">
-        <img id="score-icon"
-            src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Dec/solomyob_videoPlayable1/assets/invoice-icon.png"
-            alt="$">
-        <span id="score-value">0</span>
-    </div>
-
     <div id="thegame"></div>
     <!-- Instruction overlay for waiting state -->
     <div id="instruction-overlay">
