@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="./assets/index-Dy-SL1yq.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-vhRB2Ldw.css">
+  <script type="module" crossorigin src="./assets/index-G5GKba1X.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Cq2cG_A2.css">
 </head>
 
 <body>
@@ -48,11 +48,17 @@
             <p>Loading...</p>
         </div>
     </div>
-    <!-- Video drawer toggle (centered, outside container so it stays visible) -->
+    <!-- Video close/play toggle (inside video container) -->
     <button id="video-toggle">
-        <!-- <div class="drawer-handle"></div> -->
-        <svg class="drawer-chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 15L12 9L6 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Close icon (X) - shown when video is visible -->
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+        <!-- Play icon - shown when video is hidden -->
+        <svg class="icon-play" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 3L19 12L5 21V3Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
         </svg>
     </button>
     <!-- Score counter below video -->
