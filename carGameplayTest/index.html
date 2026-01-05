@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Racing 3D</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.70.0/phaser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #1a1a2e;
+        }
+
+        #game-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #game-container canvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-container"></div>
+    <div id="threejs-container"></div>
+
+    <script>
+        // Detect if mobile or desktop based on screen dimensions
+        const isMobile = window.innerWidth <= 768 || window.innerHeight > window.innerWidth;
+
+        // Use actual window dimensions to fill entire screen
+        const GAME_WIDTH = window.innerWidth;
+        const GAME_HEIGHT = window.innerHeight;
+
+        // Road projection settings (adjusted based on orientation)
+        const ROAD_CONFIG = {
+            horizonY: isMobile ? Math.floor(GAME_HEIGHT * 0.35) : Math.floor(GAME_HEIGHT * 0.36),
+            roadWidth: isMobile ? 1600 : 5000,        // Much wider for desktop
+            segmentLength: 200,     // Length of each road segment
+            cameraHeight: 1000,     // Camera height above road
+            cameraDepth: 0.84,      // Camera depth (affects FOV)
+            drawDistance: 100,      // How many segments to draw
+            fogDensity: 5           // Fog density
+        };
+
+        class RacingScene extends Phaser.Scene {
+            constructor() {
+                super({ key: 'RacingScene' });
+                this.roadOffset = 0;
+                this.speed = 400;           // Constant speed
+                this.normalSpeed = 400;     // Normal speed (150 km/h)
+                this.boostSpeed = 400;      // Boost speed (300 km/h)
+                this.maxSpeed = 400;
+                this.playerX = 0;
+                this.curvature = 0;
+                this.targetCurvature = 0;
+                this.boostTimer = 0;        // Boost remaining time
+                this.boostDuration = 5000;  // 5 seconds in ms
+
+                // Camera bobbing for depth effect
+                this.cameraPhase = 0;
+                this.cameraBobAmount = 20;   // Skyline movement amount
+                this.roadPerspectiveShift = 0.02; // Road width shift amount
+
+                // Skyline direction (1 = clockwise, -1 = anticlockwise)
+                this.skylineDirection = 1;
+                this.directionChangeTimer = 0;
+                this.nextDirectionChange = 3 + Math.random() * 5; // 3-8 seconds
+            }
+
+            preload() {
+                let type = "f1";
+                /* this.load.setPath("https://snktcodes.github.io/html5games/f1car/assets/"); */
+                this.load.image('skyline', type + 'Skyline.png');
+                this.load.image('ground', type + 'Ground.png');
+                this.load.image('road', type + 'Road.png');
+                this.load.image('fog', type + 'Fog.png');
+                this.load.image('carsteerright', 'carsteerright.png');
+                this.load.image('carsteerleft', 'carsteerleft.png');
+                this.load.image('carsteeridle', 'carsteeridle.png');
+                this.load.image('carmidpart', 'carmidpart.png');
+                this.load.image('carbackpart', 'carbackpart.png');
+                this.load.image('carbackpartboost', 'carbackpartboost.png');
+            }
+
+            create() {
+                // Create render textures for the road
+                this.roadCanvas = document.createElement('canvas');
+                this.roadCanvas.width = GAME_WIDTH;
+                this.roadCanvas.height = GAME_HEIGHT - ROAD_CONFIG.horizonY;
+                this.roadCtx = this.roadCanvas.getContext('2d');
+
+                // Background layers
+                this.createBackground();
+
+                // Road display
+                this.roadTexture = this.textures.createCanvas('roadRender', GAME_WIDTH, GAME_HEIGHT - ROAD_CONFIG.horizonY);
+                this.roadImage = this.add.image(GAME_WIDTH / 2, ROAD_CONFIG.horizonY + (GAME_HEIGHT - ROAD_CONFIG.horizonY) / 2, 'roadRender');
+
+                // Ground on sides (rendered behind road)
+                this.groundLeft = this.add.tileSprite(0, ROAD_CONFIG.horizonY, GAME_WIDTH, GAME_HEIGHT - ROAD_CONFIG.horizonY, 'ground');
+                this.groundLeft.setOrigin(0, 0);
+                this.groundLeft.setDepth(0);
+
+                this.roadImage.setDepth(1);
+
+                // Fog overlay - maintain aspect ratio
+                this.fogOverlay = this.add.image(GAME_WIDTH / 2, ROAD_CONFIG.horizonY + 50, 'fog');
+                const fogImg = this.textures.get('fog').getSourceImage();
+                const fogScale = GAME_WIDTH / fogImg.width;
+                this.fogOverlay.setScale(fogScale);
+                this.fogOverlay.setAlpha(0);
+                this.fogOverlay.setDepth(2);
+
+                // Get road texture data
+                this.roadTextureImg = this.textures.get('road').getSourceImage();
+
+                // UI Elements
+                this.createUI();
+
+                // Input
+                this.cursors = this.input.keyboard.createCursorKeys();
+                this.keys = this.input.keyboard.addKeys({
+                    W: Phaser.Input.Keyboard.KeyCodes.W,
+                    A: Phaser.Input.Keyboard.KeyCodes.A,
+                    S: Phaser.Input.Keyboard.KeyCodes.S,
+                    D: Phaser.Input.Keyboard.KeyCodes.D
+                });
+
+                // Touch input for mobile
+                this.touchSteer = 0; // -1 left, 0 center, 1 right
+                this.input.on('pointerdown', (pointer) => {
+                    // Steer based on which half of screen is touched
+                    if (pointer.x < GAME_WIDTH / 2) {
+                        this.touchSteer = -1;
+                    } else {
+                        this.touchSteer = 1;
+                    }
+                });
+
+                this.input.on('pointermove', (pointer) => {
+                    if (pointer.isDown) {
+                        if (pointer.x < GAME_WIDTH / 2) {
+                            this.touchSteer = -1;
+                        } else {
+                            this.touchSteer = 1;
+                        }
+                    }
+                });
+
+                this.input.on('pointerup', () => {
+                    this.touchSteer = 0;
+                });
+
+                // Road segments with curves
+                this.roadSegments = this.generateRoad();
+
+                // Create car sprites
+                this.createCar();
+
+                // Set constant speed (endless mode)
+                this.speed = this.normalSpeed;
+
+                // Track steering input
+                this.steeringInput = 0;
+                this.isBoosting = false;
+
+            }
+
+            createCar() {
+                console.log(this.scale.height);
+                // Scale for car parts (larger on desktop, smaller on mobile portrait)
+                const carScale = isMobile ? (this.scale.height * .002) : this.scale.height * .0025;
+
+                // Position car at bottom center of screen
+                const carX = GAME_WIDTH / 2;
+                const carY = isMobile ? GAME_HEIGHT - 120 : GAME_HEIGHT - 250;
+
+                // Create a container for all car parts - positioned near bottom
+                this.carContainer = this.add.container(carX, carY);
+                this.carContainer.setDepth(5);
+
+                // FRONT PARTS (steering variants) - only one visible at a time
+                this.carSteerIdle = this.add.image(0, 0, 'carsteeridle');
+                this.carSteerLeft = this.add.image(0, 0, 'carsteerleft');
+                this.carSteerRight = this.add.image(0, 0, 'carsteerright');
+
+                this.carSteerIdle.setScale(carScale);
+                this.carSteerLeft.setScale(carScale);
+                this.carSteerRight.setScale(carScale);
+
+                // Start with idle front visible
+                this.carSteerIdle.setVisible(true);
+                this.carSteerLeft.setVisible(false);
+                this.carSteerRight.setVisible(false);
+
+                // MID PART (always visible)
+                this.carMidPart = this.add.image(0, 0, 'carmidpart');
+                this.carMidPart.setScale(carScale);
+
+                // BACK PARTS (normal and boost variants)
+                this.carBackPart = this.add.image(0, 0, 'carbackpart');
+                this.carBackPartBoost = this.add.image(0, 0, 'carbackpartboost');
+
+                this.carBackPart.setScale(carScale);
+                this.carBackPartBoost.setScale(carScale);
+
+                // Start with normal back visible
+                this.carBackPart.setVisible(true);
+                this.carBackPartBoost.setVisible(false);
+
+                // Position parts vertically: front > mid > back
+                const frontHeight = this.carSteerIdle.displayHeight / 6;
+                const midHeight = this.carMidPart.displayHeight / 6;
+                const backHeight = this.carBackPart.displayHeight / 6;
+
+                // Stack positions
+                const frontY = -midHeight / 2 - frontHeight / 2 + 5;
+                const midY = 0;
+                const backY = midHeight / 2 + backHeight / 2 - 5;
+
+                // Apply positions to all front variants
+                this.carSteerIdle.setY(frontY);
+                this.carSteerLeft.setY(frontY);
+                this.carSteerRight.setY(frontY);
+
+                // Mid position
+                this.carMidPart.setY(midY);
+
+                // Back positions
+                this.carBackPart.setY(backY);
+                this.carBackPartBoost.setY(backY);
+
+                // Add all parts to container
+                this.carContainer.add([
+                    this.carSteerIdle, this.carSteerLeft, this.carSteerRight,
+                    this.carMidPart,
+                    this.carBackPart, this.carBackPartBoost
+                ]);
+            }
+
+            updateCar() {
+                // Update front part based on steering
+                this.carSteerIdle.setVisible(false);
+                this.carSteerLeft.setVisible(false);
+                this.carSteerRight.setVisible(false);
+
+                if (this.steeringInput < -0.3) {
+                    this.carSteerLeft.setVisible(true);
+                } else if (this.steeringInput > 0.3) {
+                    this.carSteerRight.setVisible(true);
+                } else {
+                    this.carSteerIdle.setVisible(true);
+                }
+
+                // Update back part based on boost
+                this.carBackPart.setVisible(!this.isBoosting);
+                this.carBackPartBoost.setVisible(this.isBoosting);
+
+                // Smooth horizontal glide based on steering
+                // Each part shifts differently for realistic effect
+                const maxOffset = 12;  // Maximum horizontal offset in pixels
+
+                // If not actively steering, reset car parts to center
+                const targetOffset = this.isActivelySteering ? (this.steeringInput * maxOffset) : 0;
+
+                // Front parts glide most (more responsive to steering)
+                const frontOffset = targetOffset * 1.2;
+                this.carSteerIdle.setX(Phaser.Math.Linear(this.carSteerIdle.x, frontOffset, 0.05));
+                this.carSteerLeft.setX(Phaser.Math.Linear(this.carSteerLeft.x, frontOffset, 0.05));
+                this.carSteerRight.setX(Phaser.Math.Linear(this.carSteerRight.x, frontOffset, 0.05));
+
+                // Mid part glides moderately
+                const midOffset = targetOffset * 0.8;
+                this.carMidPart.setX(Phaser.Math.Linear(this.carMidPart.x, midOffset, 0.04));
+
+                // Back parts glide least (follows the rest)
+                const backOffset = targetOffset * 0.5;
+                this.carBackPart.setX(Phaser.Math.Linear(this.carBackPart.x, backOffset, 0.03));
+                this.carBackPartBoost.setX(Phaser.Math.Linear(this.carBackPartBoost.x, backOffset, 0.03));
+            }
+
+            createBackground() {
+                // Skyline - scale to cover width while maintaining aspect ratio
+                this.skyline = this.add.image(GAME_WIDTH / 2, 0, 'skyline');
+                const skyImg = this.textures.get('skyline').getSourceImage();
+                let skyScale = Math.max(GAME_WIDTH / skyImg.width, ROAD_CONFIG.horizonY / skyImg.height);
+                if (isMobile) {
+                    skyScale = skyScale * 2;
+                } else {
+                    skyScale = skyScale * 1.15;
+                }
+                this.skyline.setScale(skyScale);
+                this.skyline.setOrigin(0.5, 0);
+                this.skyline.setDepth(-1);
+            }
+
+            createUI() {
+                return; // UI hidden
+                // Speedometer background
+                const speedoX = 70;
+                const speedoY = 70;
+
+                // Outer ring
+                this.add.circle(speedoX, speedoY, 55, 0x333333).setDepth(10);
+                this.add.circle(speedoX, speedoY, 50, 0x1a1a1a).setDepth(10);
+
+                // Speed arc (colored portion)
+                this.speedArc = this.add.graphics().setDepth(10);
+
+                // Speed text
+                this.speedText = this.add.text(speedoX, speedoY + 15, '0', {
+                    fontSize: '20px',
+                    fontFamily: 'Arial Black',
+                    color: '#ffffff'
+                }).setOrigin(0.5).setDepth(10);
+
+                // Gear indicator
+                this.add.text(speedoX, speedoY + 32, 'N', {
+                    fontSize: '14px',
+                    fontFamily: 'Arial',
+                    color: '#ff6600'
+                }).setOrigin(0.5).setDepth(10);
+
+                // Position indicator
+                const posX = GAME_WIDTH / 2;
+                this.add.rectangle(posX, 30, 200, 40, 0x333333, 0.8).setDepth(10);
+                this.positionText = this.add.text(posX - 30, 30, '20', {
+                    fontSize: '28px',
+                    fontFamily: 'Arial Black',
+                    color: '#ffffff'
+                }).setOrigin(0.5).setDepth(10);
+                this.add.text(posX + 10, 22, 'th', {
+                    fontSize: '14px',
+                    fontFamily: 'Arial',
+                    color: '#ffffff'
+                }).setOrigin(0.5).setDepth(10);
+
+                // Progress dot
+                this.add.circle(posX + 50, 30, 8, 0xff0000).setDepth(10);
+
+                // Checkered flag icon
+                this.add.rectangle(posX + 85, 30, 20, 20, 0xffffff).setDepth(10);
+
+                // Pause button
+                this.add.circle(GAME_WIDTH - 40, 40, 25, 0x333333, 0.8).setDepth(10);
+                this.add.rectangle(GAME_WIDTH - 45, 40, 6, 20, 0xffffff).setDepth(10);
+                this.add.rectangle(GAME_WIDTH - 35, 40, 6, 20, 0xffffff).setDepth(10);
+
+                // Instructions
+                this.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 20, 'Arrow Keys / WASD to drive', {
+                    fontSize: '14px',
+                    fontFamily: 'Arial',
+                    color: '#ffffff'
+                }).setOrigin(0.5).setDepth(10).setAlpha(0.7);
+            }
+
+            generateRoad() {
+                const segments = [];
+                const numSegments = 500;
+
+                for (let i = 0; i < numSegments; i++) {
+                    let curve = 0;
+
+                    // Create some curves
+                    if (i > 50 && i < 100) curve = 2;
+                    else if (i > 150 && i < 200) curve = -3;
+                    else if (i > 250 && i < 350) curve = 1.5;
+                    else if (i > 400 && i < 450) curve = -2;
+
+                    segments.push({
+                        curve: curve,
+                        y: 0 // hill height (not used yet)
+                    });
+                }
+
+                return segments;
+            }
+
+            update(time, delta) {
+                const dt = delta / 1000;
+
+                // Handle boost timer
+                if (this.boostTimer > 0) {
+                    this.boostTimer -= delta;
+                    if (this.boostTimer <= 0) {
+                        // Boost ended, return to normal speed
+                        this.boostTimer = 0;
+                        this.isBoosting = false;
+                        this.speed = this.normalSpeed;
+                    }
+                }
+
+                // Steering (keyboard + touch) - faster on desktop for wider road
+                const steerSpeed = isMobile ? 3 : 6;
+                const steerLeft = this.cursors.left.isDown || this.keys.A.isDown || this.touchSteer === -1;
+                const steerRight = this.cursors.right.isDown || this.keys.D.isDown || this.touchSteer === 1;
+
+
+                if (steerLeft) {
+                    this.playerX -= steerSpeed * (this.speed / this.maxSpeed) * dt * 1000;
+                    this.steeringInput = -1;
+                    this.isActivelySteering = true;
+                } else if (steerRight) {
+                    this.playerX += steerSpeed * (this.speed / this.maxSpeed) * dt * 1000;
+                    this.steeringInput = 1;
+                    this.isActivelySteering = true;
+                } else {
+                    // Not actively steering - reset to idle
+                    this.steeringInput = 0;
+                    this.isActivelySteering = false;
+                }
+
+                // Road stays at current angle when no keys pressed
+
+                // Clamp player position
+                this.playerX = Phaser.Math.Clamp(this.playerX, -1800, 1800);
+                if (isMobile) {
+                    this.playerX = Phaser.Math.Clamp(this.playerX, -600, 600);
+                }
+
+                // Update road offset
+                this.roadOffset += this.speed * dt;
+
+                // Road curvature disabled - road stays straight
+                // Only moves when player steers left/right
+                this.curvature = 0;
+
+                // Camera bobbing effect - creates depth
+                this.cameraPhase += this.speed * dt * 0.008 * this.skylineDirection;
+                const cameraBob = Math.sin(this.cameraPhase) * this.cameraBobAmount;
+
+                // Randomly change skyline direction
+                this.directionChangeTimer += dt;
+                if (this.directionChangeTimer >= this.nextDirectionChange) {
+                    this.skylineDirection *= -1; // Flip direction
+                    this.directionChangeTimer = 0;
+                    this.nextDirectionChange = 3 + Math.random() * 5; // Next change in 3-8 seconds
+                }
+
+                // Move skyline up/down and left/right for depth effect (circular motion)
+                // Skyline goes UP when road at full depth, DOWN when road shifts
+                const skylineX = Math.cos(this.cameraPhase) * 20; // Horizontal pan
+                this.skyline.setY(-cameraBob - 150); // Inverted: up when road deeper
+                this.skyline.setX(GAME_WIDTH / 2 + skylineX);
+
+                // Update ground scroll
+                this.groundLeft.tilePositionY -= this.speed * dt * 2;
+
+                // Render the road
+                this.renderRoad();
+
+
+                // Update car based on steering/boost
+                this.updateCar();
+
+                // Update UI
+                this.updateUI();
+            }
+
+            renderRoad() {
+                const ctx = this.roadCtx;
+                const canvas = this.roadCanvas;
+                const roadHeight = canvas.height;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const roadImg = this.roadTextureImg;
+                const roadImgWidth = roadImg.width;
+                const roadImgHeight = roadImg.height;
+
+                // Draw road from bottom to top (near to far)
+                for (let y = roadHeight - 1; y >= 0; y--) {
+                    // Proper perspective calculation for straight road
+                    // Distance from bottom of screen (camera)
+                    const distanceFromBottom = roadHeight - y;
+
+                    // Perspective depth factor (0 at bottom, 1 at horizon)
+                    const depthFactor = distanceFromBottom / roadHeight;
+
+                    // Calculate road width with proper perspective scaling
+                    // Road gets narrower as it goes toward horizon
+                    // Slight perspective shift for subtle depth effect
+                    const cameraPerspectiveShift = isMobile ? Math.sin(this.cameraPhase) * 0.003 : Math.sin(this.cameraPhase) * 0.005; // Small shift
+                    const perspectiveScale = 1 - (depthFactor * (0.99 + cameraPerspectiveShift)); // 0.98 = very narrow at horizon
+                    const roadWidth = ROAD_CONFIG.roadWidth * perspectiveScale;
+
+                    // Center the road, accounting for player horizontal position
+                    const playerOffsetScale = perspectiveScale;
+                    const roadX = (GAME_WIDTH / 2) - (roadWidth / 2) - (this.playerX * playerOffsetScale);
+
+                    // Perspective-correct texture mapping
+                    // Use 1/z for texture coordinate to get correct depth perception
+                    const z = 1 / (1 - depthFactor * 0.99 + 0.01); // Avoid division by zero
+                    const textureY = ((z * 50 + this.roadOffset * 3) % roadImgHeight + roadImgHeight) % roadImgHeight;
+
+                    // Draw ground first (behind road)
+                    const groundColor = this.getGroundColor(y);
+                    ctx.fillStyle = groundColor;
+                    ctx.fillRect(0, y, canvas.width, 1);
+
+                    // Draw road segment - keeping road straight
+                    if (roadWidth > 0) {
+                        ctx.drawImage(
+                            roadImg,
+                            0, Math.floor(textureY), roadImgWidth, 1,  // source
+                            roadX, y, roadWidth, 1  // destination
+                        );
+                    }
+                }
+
+                // Update the Phaser texture
+                const texture = this.textures.get('roadRender');
+                texture.context.clearRect(0, 0, canvas.width, canvas.height);
+                texture.context.drawImage(canvas, 0, 0);
+                texture.refresh();
+            }
+
+            getGroundColor(y) {
+                // Create grass color gradient based on distance
+                const normalY = y / (GAME_HEIGHT - ROAD_CONFIG.horizonY);
+                const r = 90;//Math.floor(40 + normalY * 30);
+                const g = 110;//Math.floor(80 + normalY * 50);
+                const b = 41;//Math.floor(20 + normalY * 20);
+                return `rgb(${r},${g},${b})`;
+            }
+
+            updateUI() {
+                return; // UI hidden
+                // Update speedometer
+                const speedPercent = this.speed / this.maxSpeed;
+                this.speedArc.clear();
+
+                // Draw speed arc
+                const startAngle = Math.PI * 0.75;
+                const endAngle = startAngle + (speedPercent * Math.PI * 1.5);
+
+                this.speedArc.lineStyle(8, this.getSpeedColor(speedPercent));
+                this.speedArc.beginPath();
+                this.speedArc.arc(70, 70, 42, startAngle, endAngle);
+                this.speedArc.strokePath();
+
+                // Update speed text
+                this.speedText.setText(Math.floor(this.speed));
+            }
+
+            getSpeedColor(percent) {
+                if (percent < 0.5) return 0x00ff00;
+                if (percent < 0.8) return 0xffff00;
+                return 0xff0000;
+            }
+        }
+
+        // Game configuration
+        const config = {
+            type: Phaser.AUTO,
+            width: GAME_WIDTH,
+            height: GAME_HEIGHT,
+            parent: 'game-container',
+            backgroundColor: '#87CEEB',
+            scene: RacingScene,
+            scale: {
+                mode: Phaser.Scale.RESIZE,
+                autoCenter: Phaser.Scale.CENTER_BOTH,
+                width: GAME_WIDTH,
+                height: GAME_HEIGHT
+            },
+            render: {
+                pixelArt: false,
+                antialias: true
+            },
+            fps: {
+                target: 60,
+                forceSetTimeOut: true
+            }
+        };
+
+        const game = new Phaser.Game(config);
+
+
+    </script>
+</body>
+
+</html>
