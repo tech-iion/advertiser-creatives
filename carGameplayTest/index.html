@@ -74,10 +74,11 @@
             constructor() {
                 super({ key: 'RacingScene' });
                 this.roadOffset = 0;
-                this.speed = 400;           // Constant speed
-                this.normalSpeed = 400;     // Normal speed (150 km/h)
-                this.boostSpeed = 400;      // Boost speed (300 km/h)
-                this.maxSpeed = 400;
+                this.speed = 180;           // Starting speed
+                this.normalSpeed = 180;     // Slow speed when not touching
+                this.boostSpeed = 600;      // Fast speed when holding
+                this.maxSpeed = 600;
+                this.isTouching = false;    // Track if screen is being touched
                 this.playerX = 0;
                 this.curvature = 0;
                 this.targetCurvature = 0;
@@ -157,6 +158,26 @@
                 // Touch input for mobile
                 this.touchSteer = 0; // -1 left, 0 center, 1 right
                 this.input.on('pointerdown', (pointer) => {
+                    this.isTouching = true;
+
+                    // Hide instruction on first tap
+                    if (this.instructionShown && this.instructionText) {
+                        this.instructionShown = false;
+                        this.tweens.killTweensOf(this.instructionText);
+                        this.tweens.add({
+                            targets: this.instructionText,
+                            alpha: 0,
+                            y: this.instructionText.y - 30,
+                            duration: 500,
+                            onComplete: () => {
+                                if (this.instructionText) {
+                                    this.instructionText.destroy();
+                                    this.instructionText = null;
+                                }
+                            }
+                        });
+                    }
+
                     // Steer based on which half of screen is touched
                     if (pointer.x < GAME_WIDTH / 2) {
                         this.touchSteer = -1;
@@ -176,6 +197,7 @@
                 });
 
                 this.input.on('pointerup', () => {
+                    this.isTouching = false;
                     this.touchSteer = 0;
                 });
 
@@ -191,6 +213,27 @@
                 // Track steering input
                 this.steeringInput = 0;
                 this.isBoosting = false;
+
+                // Initial instruction text
+                this.instructionText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 50, 'TAP & HOLD TO BOOST', {
+                    fontSize: isMobile ? '28px' : '36px',
+                    fontFamily: 'Arial Black',
+                    color: '#ffffff',
+                    stroke: '#000000',
+                    strokeThickness: 4
+                }).setOrigin(0.5).setDepth(100);
+
+                // Pulsing animation for instruction
+                this.tweens.add({
+                    targets: this.instructionText,
+                    alpha: 0.5,
+                    duration: 800,
+                    yoyo: true,
+                    repeat: -1
+                });
+
+                // Flag to track if instruction should hide
+                this.instructionShown = true;
 
             }
 
@@ -407,15 +450,15 @@
             update(time, delta) {
                 const dt = delta / 1000;
 
-                // Handle boost timer
-                if (this.boostTimer > 0) {
-                    this.boostTimer -= delta;
-                    if (this.boostTimer <= 0) {
-                        // Boost ended, return to normal speed
-                        this.boostTimer = 0;
-                        this.isBoosting = false;
-                        this.speed = this.normalSpeed;
-                    }
+                // Handle tap-and-hold speed boost
+                if (this.isTouching) {
+                    // Smoothly increase to boost speed while holding
+                    this.speed = Phaser.Math.Linear(this.speed, this.boostSpeed, 0.05);
+                    this.isBoosting = true;
+                } else {
+                    // Smoothly return to normal speed when released
+                    this.speed = Phaser.Math.Linear(this.speed, this.normalSpeed, 0.08);
+                    this.isBoosting = this.speed > this.normalSpeed + 10;
                 }
 
                 // Steering (keyboard + touch) - faster on desktop for wider road
