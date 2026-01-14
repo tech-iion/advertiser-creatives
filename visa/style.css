@@ -1,0 +1,67 @@
+
+#game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.15s ease-out;
+}
+
+/* Blood/Damage effect - red vignette from edges fading to transparent center */
+.effect-damage {
+    opacity: 1 !important;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(139, 0, 0, 0.3) 70%,
+        rgba(255, 0, 0, 0.6) 90%,
+        rgba(180, 0, 0, 0.8) 100%
+    );
+    animation: pulse-damage 0.4s ease-out;
+}
+
+/* Gold collect effect - golden vignette from edges fading to transparent center */
+.effect-collect {
+    opacity: 1 !important;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 50%,
+        rgba(255, 215, 0, 0.2) 70%,
+        rgba(255, 180, 0, 0.5) 90%,
+        rgba(255, 140, 0, 0.7) 100%
+    );
+    animation: pulse-collect 0.35s ease-out;
+}
+
+@keyframes pulse-damage {
+    0% {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse-collect {
+    0% {
+        opacity: 0;
+        transform: scale(1.02);
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
