@@ -139,7 +139,7 @@ class Game extends Phaser.Scene {
     let state = "wait";
     let popup = this.add.group();
     let bg = this.add.sprite(config.width / 2, config.height * .4, "background");
-    bg.setScale(1.75)
+    bg.setScale(1.25)
 
     let essencetxt = this.add.sprite(config.width * .018, config.width * .018, "essencetxt");
     essencetxt.setScale(1).setOrigin(0, 0);

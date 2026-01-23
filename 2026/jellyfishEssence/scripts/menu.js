@@ -229,7 +229,7 @@ class Menu extends Phaser.Scene {
         alpha: 1,
         duration: 400,
         delay: 200,
-        scale: 1.75,
+        scale: 1.25,
         ease: "Power2.easeIn",
         onComplete: function () {
           self.scene.start("game");
