@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Essence Tennis</title>
+  <meta charset="utf-8" />
+  <!-- Allow fullscreen mode on iOS devices. (These are Apple specific meta tags.) -->
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <meta name="HandheldFriendly" content="true" />
+
+  <!-- Chrome for Android web app tags -->
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <style type="text/css">
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    html,
+    body {
+      overflow: hidden;
+      touch-action: none;
+      -ms-touch-action: none;
+    }
+
+    body {
+      background-size: inherit;
+      background-color: transparent !important;
+    }
+
+    canvas {
+      touch-action-delay: none;
+      touch-action: none;
+      -ms-touch-action: none;
+    }
+
+    @font-face {
+      font-family: "vanilla";
+      font-style: normal;
+      font-weight: 500;
+      src: url("https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Oct/jellyfishEssence/font/Montserrat-VariableFont_wght.ttf") format("truetype");
+    }
+
+    .hand-swipe {
+      position: absolute;
+      bottom: 16%;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 25%;
+    }
+
+    #cta-button {
+      position: absolute;
+      /* bottom: 10%;
+			left: 50%; */
+      /* transform: translateX(-50%); */
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: 0px solid #ffffff;
+      border-radius: 30px;
+      color: transparent;
+      font-family: "vanilla", sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 54px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: none;
+      user-select: none;
+      left: 0;
+      right: 0;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+    }
+  </style>
+  <script type="text/javascript"
+    src="https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Oct/jellyfishEssence/scripts/phaser.min.js"></script>
+  <script>
+    function handleCTAClick() {
+      console.log("CTA button clicked - opening URL");
+      window.open(window.ctaurl, "_blank");
+    }
+
+    function showCTAButton() {
+      const ctaButton = document.getElementById("cta-button");
+      if (ctaButton) {
+        ctaButton.style.display = "block";
+        // Add entrance animation
+        ctaButton.style.opacity = "0";
+        //ctaButton.style.transform = "translateX(-50%) translateY(20px)";
+
+        setTimeout(() => {
+          ctaButton.style.transition = "all 0.6s ease";
+          ctaButton.style.opacity = "1";
+          //ctaButton.style.transform = "translateX(-50%) translateY(0)";
+        }, 100);
+      }
+    }
+
+    function hideCTAButton() {
+      const ctaButton = document.getElementById("cta-button");
+      if (ctaButton) {
+        ctaButton.style.display = "none";
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <!-- <img src="img/handd.gif" alt="" class="hand-swipe"> -->
+  <div style="
+        font-family: vanilla;
+        position: absolute;
+        left: -1000px;
+        visibility: hidden;
+      ">
+    .
+  </div>
+  <div id="game_content"></div>
+  <div id="cta-button" onclick="handleCTAClick()">PLAY NOW!</div>
+  <script>
+
+    window.language = "";
+    //GAM
+    window.trackingPath = "";
+    //"https://tech-iion.github.io/advertiser-creatives/finalbuildfiles/2025/Oct/jellyfishEssence";
+    window.trackingType =
+      "https://staging-dmp-producer.iion.io/tracker/impressions?platform=GAM&campaign_id=%ebuy!&publisher_id=%epid!&creative_id=%ecid!&maid=%%ADVERTISING_IDENTIFIER_PLAIN%%&page_url=%%SITE%%&height=%%HEIGHT%%&width=%%WIDTH%%&video_min_duration=%%VIDEO_DURATION%%&gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_XXXX}&demand_id=%eadv!&line_item=%eaid!&event_name=";
+    window.setTracker = "%%CLICK_URL_UNESC%%";
+    window.ctaurl =
+      window.setTracker +
+      "https://ad.doubleclick.net/ddm/trackclk/N2588912.5825718COSNOVA_DIRECTIN/B34372019.431438579;dc_trk_aid=624512232;dc_trk_cid=243688926;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};ltd=;dc_tdv=1";
+  </script>
+  <script type="text/javascript" src="scripts/lib.js"></script>
+  <script type="text/javascript" src="scripts/boot.js"></script>
+  <script type="text/javascript" src="scripts/preload.js"></script>
+  <script type="text/javascript" src="scripts/menu.js"></script>
+  <script type="text/javascript" src="scripts/game.js"></script>
+
+
+</body>
+
+</html>

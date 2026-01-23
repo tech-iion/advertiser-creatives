@@ -13,7 +13,6 @@ class Game extends Phaser.Scene {
     this.anm_player1;
     this.anm_player2;
     this.ball;
-    this.ball_shadow;
     this.move_to;
     this.target_x = config.width / 2;
     this.p1_anim_state = "idle";
@@ -31,43 +30,6 @@ class Game extends Phaser.Scene {
       }
       if (this.shadow_player2) {
         this.shadow_player2.setPosition(this.player2.x + this.player2.displayWidth * .04, this.player2.y + this.player2.displayHeight / 4);
-      }
-      // Update ball shadow position and scale based on ball's Y position
-      if (this.ball_shadow && this.ball) {
-        // Configurable shadow parameters
-        const shadowOffsetX = 5;   // Horizontal offset from ball center
-        const shadowOffsetY = 45;  // Vertical offset from ball center
-        const shadowMinScale = 0.4;  // Minimum shadow scale (at middle of court)
-        const shadowMaxScale = .6;  // Maximum shadow scale (near players)
-        const ballMinScale = 1;   // Minimum ball scale (at middle of court)
-        const ballMaxScale = 1;   // Maximum ball scale (near players)
-
-        // Position shadow with offset
-        this.ball_shadow.setPosition(this.ball.x + shadowOffsetX, this.ball.y + shadowOffsetY);
-
-        // Calculate shadow scale based on ball's Y position
-        // Y ranges from ~250 (top/player2) to ~810 (bottom/player1)
-        // Middle of court is around Y = 540
-        // Shadow should be smallest at middle, larger near players
-        const minY = 250;  // Near top player
-        const maxY = 810;  // Near bottom player
-        const midY = (minY + maxY) / 2;  // Middle of court (~530)
-
-        // Calculate distance from middle (0 to 1, where 1 is at players)
-        const distanceFromMiddle = Math.abs(this.ball.y - midY) / (maxY - midY);
-
-        // Scale shadow based on distance from middle
-        const shadowScale = shadowMinScale + (distanceFromMiddle * (shadowMaxScale - shadowMinScale));
-
-        // Also adjust opacity - more transparent when smaller
-        const shadowAlpha = 0.2 + (distanceFromMiddle * 0.2);
-
-        this.ball_shadow.setScale(shadowScale);
-        this.ball_shadow.setAlpha(shadowAlpha);
-
-        // Scale the ball itself slightly for depth perception
-        const ballScale = ballMinScale + (distanceFromMiddle * (ballMaxScale - ballMinScale));
-        this.ball.setScale(ballScale);
       }
       // Player
       if (pointer_down) {
@@ -382,17 +344,9 @@ class Game extends Phaser.Scene {
     this.player2.body.setImmovable();
     let player2 = this.player2;
     this.player2.setBodySize(80, 20, player2);
-    // Create ball shadow
-    this.ball_shadow = this.add.graphics();
-    this.ball_shadow.fillStyle(0x000000, 0.4); // Semi-transparent black
-    this.ball_shadow.fillEllipse(0, 0, 30, 12); // Ellipse shadow
-    this.ball_shadow.setPosition(config.width / 2, 365);
-    this.ball_shadow.setDepth(0); // Behind ball
-
     this.ball = this.physics.add.sprite(config.width / 2, 350, "ball");
     this.ball.setCollideWorldBounds(true);
     this.ball.setBounce(1);
-    this.ball.setDepth(1); // Ball above shadow
     //this.ball.setVelocityY(ball_speed);
     let ball = this.ball;
     self.physics.add.collider(ball, player1, ballHit1, null, this);
