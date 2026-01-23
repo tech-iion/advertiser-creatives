@@ -236,8 +236,11 @@ class Game extends Phaser.Scene {
     });
     this.anims.create({
       key: "idle2",
-      frames: this.anims.generateFrameNumbers("idle_player2"),
-      frameRate: 11,
+      frames: this.anims.generateFrameNumbers("idle_player2", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 3,
       repeat: -1,
     });
     this.anims.create({
@@ -248,8 +251,11 @@ class Game extends Phaser.Scene {
     });
     this.anims.create({
       key: "swing2",
-      frames: this.anims.generateFrameNames("swing_player2"),
-      frameRate: 20,
+      frames: this.anims.generateFrameNames("swing_player2", {
+        start: 0,
+        end: 6,
+      }),
+      frameRate: 24,
       repeat: 0,
     });
     this.anims.create({
@@ -327,8 +333,11 @@ class Game extends Phaser.Scene {
 
     this.player2 = this.physics.add
       .sprite(config.width / 2, 250, "player2")
-      .setAlpha(0);
-    this.anm_player2 = this.add.sprite(config.width / 2, 250, "idle_player2");
+      .setAlpha(0)
+      .setScale(0.6).setOrigin(0.45, .68);
+    this.anm_player2 = this.add
+      .sprite(config.width / 2, 250, "idle_player2")
+      .setScale(0.6).setOrigin(0.45, .68);
     let anm_player2 = this.anm_player2;
     anm_player2.play("idle2", true);
     this.player2.setCollideWorldBounds(true);
